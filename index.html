@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="uz" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kimyo — 104 ta qiziqarli fakt, 3D molekulalar, davriy jadval va 24 til. Mualliflar: Rustamov Boʻrixon, Oqilov Qosim, Raximxojayev Ubaydulla.">
+<title>Kimyo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%97%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#070b14;--bg2:#0b1220;--card:#101a2e;--line:#1d2b47;--tx:#e8eefc;--mut:#93a4c3;--acc:#22e0b8;--acc2:#7c5cff;--gold:#ffd166}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+ radial-gradient(600px 400px at 15% 10%,rgba(34,224,184,.09),transparent 60%),
+ radial-gradient(700px 500px at 85% 30%,rgba(124,92,255,.10),transparent 60%),
+ radial-gradient(500px 400px at 50% 90%,rgba(77,171,247,.07),transparent 60%)}
+::selection{background:rgba(34,224,184,.35)}
+/* ---------- HEADER ---------- */
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(7,11,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{font-size:20px;font-weight:800;text-decoration:none;color:var(--tx);white-space:nowrap}
+.brand span{background:linear-gradient(90deg,#22e0b8,#7c5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{display:flex;gap:2px;margin-inline-start:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--mut);text-decoration:none;font-size:13.5px;padding:7px 10px;border-radius:9px;white-space:nowrap;transition:.2s}
+.nav a:hover{color:var(--tx);background:rgba(255,255,255,.06)}
+#langSel{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13.5px;max-width:180px;cursor:pointer}
+/* ---------- HERO ---------- */
+.hero{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;padding:64px 20px 40px}
+.badge{display:inline-block;border:1px solid rgba(34,224,184,.5);color:var(--acc);font-size:12.5px;padding:6px 14px;border-radius:999px;letter-spacing:.5px}
+h1{font-size:clamp(54px,9vw,94px);line-height:1.05;margin:10px 0 8px;background:linear-gradient(90deg,#22e0b8 10%,#4dabf7 50%,#7c5cff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--mut);font-size:17px;line-height:1.6;max-width:560px}
+.herobtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{background:linear-gradient(135deg,#22e0b8,#4dabf7);color:#04121c;font-weight:700;border:none;padding:12px 20px;border-radius:12px;cursor:pointer;font-size:15px;transition:.2s;box-shadow:0 6px 20px rgba(34,224,184,.25)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--acc)}
+.btn.small{padding:9px 14px;font-size:13.5px}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:28px}
+.stats b{display:block;font-size:30px;color:var(--acc)}
+.stats span{font-size:12px;color:var(--mut)}
+/* ---------- 3D ATOM (pure CSS) ---------- */
+.atomwrap{perspective:900px;width:300px;height:300px;margin:auto;position:relative}
+.atomwrap::before{content:"";position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(34,224,184,.14),transparent 65%);filter:blur(6px)}
+.atom{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:atomspin 16s linear infinite}
+@keyframes atomspin{from{transform:rotateX(-14deg) rotateY(0)}to{transform:rotateX(-14deg) rotateY(360deg)}}
+.nucleus{position:absolute;left:50%;top:50%;transform-style:preserve-3d;animation:nuc 3s ease-in-out infinite}
+@keyframes nuc{50%{transform:scale(1.18)}}
+.nucleus span{position:absolute;width:26px;height:26px;border-radius:50%;left:-13px;top:-13px}
+.np{background:radial-gradient(circle at 35% 30%,#ffb3b3,#ff4d4d 60%,#b71c1c);box-shadow:0 0 18px rgba(255,80,80,.8)}
+.nn{background:radial-gradient(circle at 35% 30%,#b3c6ff,#5b8cff 60%,#274bcc);box-shadow:0 0 18px rgba(90,140,255,.8)}
+.p1{transform:translate3d(-10px,-8px,6px)}.p2{transform:translate3d(10px,-6px,-8px)}.p3{transform:translate3d(0,10px,10px)}
+.n1{transform:translate3d(8px,8px,-4px)}.n2{transform:translate3d(-9px,6px,-10px)}.n3{transform:translate3d(0,-12px,-2px)}
+.orb{position:absolute;inset:0;border:1.5px solid rgba(34,224,184,.4);border-radius:50%;transform-style:preserve-3d}
+.o1{transform:rotateX(72deg)}
+.o2{transform:rotateX(72deg) rotateY(60deg)}
+.o3{transform:rotateX(72deg) rotateY(-60deg)}
+.spin{position:absolute;inset:0;transform-style:preserve-3d;animation:orbitspin linear infinite}
+.s1{animation-duration:2.6s}.s2{animation-duration:3.4s;animation-delay:-.8s}.s3{animation-duration:4.2s;animation-delay:-1.6s}
+@keyframes orbitspin{from{transform:rotateZ(0)}to{transform:rotateZ(360deg)}}
+.e{position:absolute;left:50%;top:-7px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d8fff5,#22e0b8 60%,#0e8f77);box-shadow:0 0 14px #22e0b8,0 0 30px rgba(34,224,184,.6)}
+/* ---------- SECTIONS ---------- */
+.sec{max-width:1180px;margin:0 auto;padding:46px 20px}
+.sec h2{font-size:30px}
+.sub{color:var(--mut);margin:6px 0 20px;font-size:15px}
+.rev{opacity:0;transform:translateY(24px);transition:.6s}
+.rev.on{opacity:1;transform:none}
+/* ---------- FACTS ---------- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+#q{flex:1;min-width:220px;background:var(--card);border:1px solid var(--line);color:var(--tx);padding:12px 16px;border-radius:12px;font-size:15px;outline:none}
+#q:focus{border-color:var(--acc)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--tx);padding:7px 12px;border-radius:999px;cursor:pointer;font-size:13px;transition:.2s}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:linear-gradient(135deg,rgba(34,224,184,.22),rgba(124,92,255,.22));border-color:var(--acc)}
+.note{font-size:12.5px;color:var(--gold);margin:6px 0}
+.shown{color:var(--mut);font-size:13px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:12px}
+.fcard{background:linear-gradient(160deg,#101a2e,#0c1424);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:.25s}
+.fcard:hover{transform:translateY(-4px);border-color:rgba(34,224,184,.6);box-shadow:0 10px 30px rgba(34,224,184,.08)}
+.fmeta{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--mut)}
+.fcat{color:var(--acc)}
+.fcard p{font-size:14.5px;line-height:1.55;flex:1}
+.copy{align-self:flex-start;background:transparent;border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:8px;cursor:pointer;font-size:12px;transition:.2s}
+.copy:hover{color:var(--acc);border-color:var(--acc)}
+.spot{border:1px solid var(--acc);background:linear-gradient(135deg,rgba(34,224,184,.12),rgba(124,92,255,.12));border-radius:16px;padding:18px;margin-bottom:16px}
+.spot p{font-size:17px;line-height:1.6;margin-top:8px}
+.spot.pop{animation:pop .5s}
+@keyframes pop{from{transform:scale(.96);opacity:.3}}
+.none{text-align:center;color:var(--mut);padding:30px}
+.morewrap{text-align:center;margin-top:20px}
+/* ---------- 3D LAB ---------- */
+.labcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.molbtns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.molstage{position:relative}
+#molCanvas{display:block;width:100%;height:400px;background:radial-gradient(circle at 50% 45%,#0e1830,#070b14);border-radius:14px;border:1px solid var(--line);touch-action:none;cursor:grab}
+#molCanvas:active{cursor:grabbing}
+.molhud{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+.molname{font-weight:700;color:var(--acc)}
+.hint{font-size:12px;color:var(--mut)}
+.moltoggles{display:flex;gap:20px;margin-top:12px;font-size:14px;color:var(--mut)}
+.moltoggles label{display:flex;gap:7px;align-items:center;cursor:pointer}
+.moltoggles input{accent-color:var(--acc);width:16px;height:16px}
+/* ---------- PERIODIC TABLE ---------- */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;font-size:12.5px;color:var(--mut)}
+.lg{display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;background:var(--cc)}
+.c0{--cc:#ff6b6b}.c1{--cc:#ffa94d}.c2{--cc:#ffd43b}.c3{--cc:#66d9e8}.c4{--cc:#a9e34b}
+.c5{--cc:#38d9a9}.c6{--cc:#4dabf7}.c7{--cc:#b197fc}.c8{--cc:#f783ac}.c9{--cc:#e599f7}
+.ptwrap{overflow-x:auto;padding-bottom:8px}
+.ptable{display:grid;grid-template-columns:repeat(18,minmax(34px,1fr));gap:4px;min-width:660px}
+.el{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:42px;padding:2px;border-radius:8px;border:1px solid var(--cc);background:rgba(255,255,255,.02);cursor:pointer;transition:.15s;font-family:inherit}
+.el:hover{background:rgba(255,255,255,.09);transform:scale(1.12);z-index:2}
+.el.sel{box-shadow:0 0 0 2px var(--acc)}
+.el i{font-style:normal;font-size:9px;color:var(--mut)}
+.el b{font-size:14px;color:var(--cc)}
+.fmark{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px dashed var(--line);border-radius:8px;font-size:9px;color:var(--mut)}
+.elinfo{display:flex;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px;min-height:110px;flex-wrap:wrap}
+.pick{color:var(--mut)}
+.eltile{width:86px;height:86px;border:2px solid var(--cc);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.03)}
+.eltile i{font-style:normal;font-size:12px;color:var(--mut)}
+.eltile b{font-size:32px;color:var(--cc)}
+.elrows{flex:1;min-width:220px}
+.elrows h3{margin-bottom:8px}
+.er{display:flex;justify-content:space-between;gap:14px;font-size:14px;padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.er span{color:var(--mut)}
+/* ---------- pH ---------- */
+.phcard{display:flex;gap:44px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+.beaker{position:relative;width:150px;height:200px;border:3px solid #8fa6cc;border-top:none;border-radius:0 0 20px 20px;background:rgba(255,255,255,.03);overflow:hidden;flex-shrink:0}
+.liquid{position:absolute;bottom:0;left:0;right:0;height:68%;transition:background .35s;background:#00c853}
+.bub{position:absolute;bottom:-12px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.55);animation:rise 3s linear infinite}
+.b1{left:25%}.b2{left:55%;width:6px;height:6px;animation-delay:1s}.b3{left:75%;width:10px;height:10px;animation-delay:2s}
+@keyframes rise{to{transform:translateY(-160px);opacity:0}}
+.phctrl{flex:1;min-width:240px}
+.phval b{font-size:44px}
+.phval span{margin-inline-start:14px;font-size:18px;font-weight:600;color:var(--acc)}
+#phRange{width:100%;accent-color:var(--acc);margin-top:14px;cursor:pointer}
+.phscale{display:flex;justify-content:space-between;color:var(--mut);font-size:12px;margin-top:4px}
+/* ---------- QUIZ ---------- */
+.quizcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;max-width:640px}
+.qbar{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+#qprog{height:100%;width:0;background:linear-gradient(90deg,#22e0b8,#4dabf7);transition:.3s}
+.qtop{color:var(--mut);font-size:13px;margin-top:14px}
+.qq{font-size:19px;margin:10px 0 16px;line-height:1.45}
+.opts{display:grid;gap:10px}
+.opt{background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:13px 16px;border-radius:12px;cursor:pointer;font-size:15px;text-align:start;transition:.2s;font-family:inherit}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt.good{border-color:#2ee6a8;background:rgba(46,230,168,.15)}
+.opt.bad{border-color:#ff6b6b;background:rgba(255,107,107,.15)}
+.opt:disabled{cursor:default}
+.qfb{min-height:26px;font-weight:700;margin:12px 0}
+.qfb.g{color:#2ee6a8}.qfb.b{color:#ff6b6b}
+.qres{text-align:center;padding:16px 0}
+.qemoji{font-size:54px}
+.qres h3{margin:10px 0 18px;font-size:22px}
+/* ---------- CREATORS ---------- */
+.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.mate{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 20px;text-align:center;transition:.25s}
+.mate:hover{transform:translateY(-5px);border-color:rgba(34,224,184,.6)}
+.rank{position:absolute;top:12px;inset-inline-start:14px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#ffd166,#ff9f43);color:#04121c;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ava{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#04121c}
+.a1{background:linear-gradient(135deg,#22e0b8,#4dabf7)}
+.a2{background:linear-gradient(135deg,#ffd166,#ff9f43)}
+.a3{background:linear-gradient(135deg,#b197fc,#f783ac)}
+.mate h3{font-size:17px}
+.role{font-size:20px;margin-top:6px}
+footer{padding:30px 20px;text-align:center;color:var(--mut);border-top:1px solid var(--line);font-size:14px}
+.fnames{font-size:12.5px;margin-top:6px}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:40px}.atomwrap{width:250px;height:250px}}
+@media(max-width:600px){.sec h2{font-size:24px}#molCanvas{height:320px}.stats{gap:18px}.phcard{gap:24px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rev{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#top">⚗️ <span>Kimyo</span></a>
+  <nav class="nav">
+    <a href="#facts" data-i18n="navF"></a>
+    <a href="#lab" data-i18n="navL"></a>
+    <a href="#table" data-i18n="navT"></a>
+    <a href="#ph" data-i18n="navP"></a>
+    <a href="#quiz" data-i18n="navQ"></a>
+    <a href="#creators" data-i18n="navC"></a>
+  </nav>
+  <select id="langSel" aria-label="Language"></select>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <span class="badge">⚗️ Kimyo · 2026</span>
+      <h1>Kimyo</h1>
+      <p class="tag" data-i18n="tag"></p>
+      <div class="herobtns">
+        <button id="btnRand" class="btn" data-i18n="b1"></button>
+        <button id="btnFacts" class="btn ghost" data-i18n="b2"></button>
+      </div>
+      <div class="stats">
+        <div><b id="stF">0</b><span data-i18n="sF"></span></div>
+        <div><b id="stL">0</b><span data-i18n="sL"></span></div>
+        <div><b id="stM">0</b><span data-i18n="sM"></span></div>
+        <div><b id="stE">0</b><span data-i18n="sE"></span></div>
+      </div>
+    </div>
+    <div class="atomwrap" aria-hidden="true">
+      <div class="atom">
+        <div class="nucleus">
+          <span class="np p1"></span><span class="np p2"></span><span class="np p3"></span>
+          <span class="nn n1"></span><span class="nn n2"></span><span class="nn n3"></span>
+        </div>
+        <div class="orb o1"><div class="spin s1"><span class="e"></span></div></div>
+        <div class="orb o2"><div class="spin s2"><span class="e"></span></div></div>
+        <div class="orb o3"><div class="spin s3"><span class="e"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <section id="facts" class="sec rev">
+    <h2 data-i18n="fT"></h2><p class="sub" data-i18n="fS"></p>
+    <div id="spot" class="spot" hidden></div>
+    <div class="toolbar">
+      <input id="q" type="search" data-i18n-ph="search">
+      <button id="btnRand2" class="btn small" data-i18n="rand"></button>
+    </div>
+    <div id="chips" class="chips"></div>
+    <p id="note" class="note" hidden></p>
+    <span id="shown" class="shown"></span>
+    <div id="factGrid" class="fgrid"></div>
+    <p id="none" class="none" hidden data-i18n="none"></p>
+    <div class="morewrap"><button id="more" class="btn ghost" data-i18n="more"></button></div>
+  </section>
+
+  <!-- 3D LAB -->
+  <section id="lab" class="sec rev">
+    <h2 data-i18n="lT"></h2><p class="sub" data-i18n="lS"></p>
+    <div class="labcard">
+      <div id="molBtns" class="molbtns"></div>
+      <div class="molstage" dir="ltr">
+        <canvas id="molCanvas"></canvas>
+        <div class="molhud"><span id="molName" class="molname"></span><span class="hint" data-i18n="hint"></span></div>
+      </div>
+      <div class="moltoggles">
+        <label><input type="checkbox" id="lblChk" checked><span data-i18n="lbl"></span></label>
+        <label><input type="checkbox" id="spinChk" checked><span data-i18n="spin"></span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERIODIC TABLE -->
+  <section id="table" class="sec rev">
+    <h2 data-i18n="tT"></h2><p class="sub" data-i18n="tS"></p>
+    <div id="legend" class="legend"></div>
+    <div class="ptwrap" dir="ltr"><div id="ptable" class="ptable"></div></div>
+    <div id="elInfo" class="elinfo"></div>
+  </section>
+
+  <!-- pH -->
+  <section id="ph" class="sec rev">
+    <h2 data-i18n="pT"></h2><p class="sub" data-i18n="pS"></p>
+    <div class="phcard">
+      <div class="beaker"><div id="liquid" class="liquid"><span class="bub b1"></span><span class="bub b2"></span><span class="bub b3"></span></div></div>
+      <div class="phctrl">
+        <div class="phval"><b id="phVal">7.0</b><span id="phLabel"></span></div>
+        <input id="phRange" type="range" min="0" max="14" step="0.1" value="7">
+        <div class="phscale" dir="ltr"><span>0</span><span>7</span><span>14</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="sec rev">
+    <h2 data-i18n="qT"></h2><p class="sub" data-i18n="qS"></p>
+    <div class="quizcard">
+      <div class="qbar"><div id="qprog"></div></div>
+      <div id="qbody"></div>
+    </div>
+  </section>
+
+  <!-- CREATORS -->
+  <section id="creators" class="sec rev">
+    <h2 data-i18n="cT"></h2><p class="sub" data-i18n="cS"></p>
+    <div class="crew">
+      <div class="mate"><div class="rank">1</div><div class="ava a1">RB</div><h3>Rustamov Boʻrixon</h3><p class="role">⚗️</p></div>
+      <div class="mate"><div class="rank">2</div><div class="ava a2">OQ</div><h3>Oqilov Qosim</h3><p class="role">🧪</p></div>
+      <div class="mate"><div class="rank">3</div><div class="ava a3">RU</div><h3>Raximxojayev Ubaydulla</h3><p class="role">🔬</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p data-i18n="foot"></p>
+  <p class="fnames">Rustamov Boʻrixon · Oqilov Qosim · Raximxojayev Ubaydulla · 2026</p>
+</footer>
+
+<script>
+"use strict";
+/* ============ I18N: 24 languages ============ */
+const I18N={
+uz:{name:"Oʻzbek tili",flag:"🇺🇿",dir:"ltr",t:{navF:"Faktlar",navL:"3D lab",navT:"Jadval",navP:"pH",navQ:"Test",navC:"Mualliflar",tag:"Atomlardan koinotgacha — kimyo olamiga qiziqarli sayohat. 100+ fakt, 3D molekulalar va 24 til!",b1:"🎲 Tasodifiy fakt",b2:"🧪 Faktlarni koʻrish",sF:"fakt",sL:"til",sM:"molekula",sE:"element",fT:"⚡ Qiziqarli kimyo faktlari",fS:"Qidiring, saralang va kashf eting!",search:"Fakt qidirish...",all:"Hammasi",rand:"🎲 Tasodifiy",copy:"Nusxa",ok:"Nusxalandi ✓",more:"Yana koʻrsatish",none:"Hech narsa topilmadi 😕",note:"",shown:"{a} / {b} ta fakt",lT:"🧊 3D molekula laboratoriyasi",lS:"Molekulani tanlang va sichqoncha bilan aylantiring!",hint:"🖱️ Sudrab aylantiring",lbl:"Belgilar",spin:"Aylanish",tT:"🧱 Davriy jadval",tS:"Elementni bosing — maʼlumot koʻring",pick:"Elementni tanlang 👆",mass:"Atom massasi",per:"Davr",grp:"Guruh",cat:"Toifa",pT:"🌈 pH indikatori",pS:"Slayderni suring — eritma rangi oʻzgaradi",acid:"Kislotali",neu:"Neytral",base:"Ishqoriy",qT:"🏆 Blits-test",qS:"6 savol — bilimingizni sinang!",next:"Keyingi →",again:"↻ Qayta",res:"Natija: {a} / {b}",good:"Toʻgʻri! ✅",bad:"Xato! ❌",cT:"👨‍🔬 Mualliflar",cS:"Ushbu sayt mualliflari",foot:"Kimyo · Kimyoni sevamiz ❤️"},cats:["Atomlar","Elementlar","Reaksiyalar","Inson tanasi","Koinot","Kundalik hayot","Tarix","Rekordlar"],ec:["Ishqoriy metall","Ishqoriy-yer metall","Oʻtuvchi metall","Post-oʻtuvchi metall","Yarim metall","Metallmas","Galogen","Inert gaz","Lantanoid","Aktinoid"],mols:["Suv","Karbonat angidrid","Metan","Ammiak","Kislorod","Osh tuzi","Benzol","Etanol"]},
+en:{name:"English",flag:"🇬🇧",dir:"ltr",t:{navF:"Facts",navL:"3D Lab",navT:"Table",navP:"pH",navQ:"Quiz",navC:"Creators",tag:"A fun journey from atoms to the cosmos — 100+ facts, 3D molecules and 24 languages!",b1:"🎲 Random fact",b2:"🧪 Explore facts",sF:"facts",sL:"languages",sM:"molecules",sE:"elements",fT:"⚡ Fun chemistry facts",fS:"Search, filter and discover!",search:"Search facts...",all:"All",rand:"🎲 Random",copy:"Copy",ok:"Copied ✓",more:"Show more",none:"Nothing found 😕",note:"",shown:"{a} / {b} facts",lT:"🧊 3D molecule lab",lS:"Pick a molecule and drag to rotate it!",hint:"🖱️ Drag to rotate",lbl:"Labels",spin:"Auto-spin",tT:"🧱 Periodic table",tS:"Tap an element to see details",pick:"Select an element 👆",mass:"Atomic mass",per:"Period",grp:"Group",cat:"Category",pT:"🌈 pH indicator",pS:"Move the slider — watch the solution change color",acid:"Acidic",neu:"Neutral",base:"Basic",qT:"🏆 Blitz quiz",qS:"6 questions — test yourself!",next:"Next →",again:"↻ Try again",res:"Score: {a} / {b}",good:"Correct! ✅",bad:"Wrong! ❌",cT:"👨‍🔬 Creators",cS:"The team behind this site",foot:"Kimyo · Made with ❤️ for chemistry"},cats:["Atoms","Elements","Reactions","Human body","Space","Everyday life","History","Records"],ec:["Alkali metal","Alkaline earth","Transition metal","Post-transition","Metalloid","Nonmetal","Halogen","Noble gas","Lanthanide","Actinide"],mols:["Water","Carbon dioxide","Methane","Ammonia","Oxygen","Table salt","Benzene","Ethanol"]},
+ru:{name:"Русский",flag:"🇷🇺",dir:"ltr",t:{navF:"Факты",navL:"3D-лаб",navT:"Таблица",navP:"pH",navQ:"Тест",navC:"Авторы",tag:"Увлекательное путешествие от атомов до космоса — 100+ фактов, 3D-молекулы и 24 языка!",b1:"🎲 Случайный факт",b2:"🧪 Смотреть факты",sF:"фактов",sL:"языков",sM:"молекул",sE:"элементов",fT:"⚡ Интересные факты о химии",fS:"Ищите, фильтруйте, открывайте!",search:"Поиск фактов...",all:"Все",rand:"🎲 Случайный",copy:"Копировать",ok:"Скопировано ✓",more:"Показать ещё",none:"Ничего не найдено 😕",note:"",shown:"{a} / {b} фактов",lT:"🧊 3D-лаборатория молекул",lS:"Выберите молекулу и вращайте её мышью!",hint:"🖱️ Тяните, чтобы вращать",lbl:"Символы",spin:"Вращение",tT:"🧱 Таблица Менделеева",tS:"Нажмите на элемент, чтобы увидеть детали",pick:"Выберите элемент 👆",mass:"Атомная масса",per:"Период",grp:"Группа",cat:"Категория",pT:"🌈 Индикатор pH",pS:"Двигайте ползунок — раствор меняет цвет",acid:"Кислотная",neu:"Нейтральная",base:"Щелочная",qT:"🏆 Блиц-тест",qS:"6 вопросов — проверьте себя!",next:"Дальше →",again:"↻ Ещё раз",res:"Результат: {a} / {b}",good:"Верно! ✅",bad:"Ошибка! ❌",cT:"👨‍🔬 Авторы",cS:"Создатели этого сайта",foot:"Kimyo · Сделано с ❤️ к химии"},cats:["Атомы","Элементы","Реакции","Тело человека","Космос","Быт","История","Рекорды"],ec:["Щелочной металл","Щёлочноземельный металл","Переходный металл","Постпереходный металл","Металлоид","Неметалл","Галоген","Благородный газ","Лантаноид","Актиноид"],mols:["Вода","Углекислый газ","Метан","Аммиак","Кислород","Поваренная соль","Бензол","Этанол"]},
+tr:{name:"Türkçe",flag:"🇹🇷",dir:"ltr",t:{navF:"Bilgiler",navL:"3D Lab",navT:"Tablo",navP:"pH",navQ:"Test",navC:"Yazarlar",tag:"Atomlardan evrene eğlenceli bir yolculuk — 100+ bilgi, 3D moleküller ve 24 dil!",b1:"🎲 Rastgele bilgi",b2:"🧪 Bilgileri keşfet",sF:"bilgi",sL:"dil",sM:"molekül",sE:"element",fT:"⚡ Eğlenceli kimya bilgileri",fS:"Ara, filtrele ve keşfet!",search:"Bilgi ara...",all:"Tümü",rand:"🎲 Rastgele",copy:"Kopyala",ok:"Kopyalandı ✓",more:"Daha fazla",none:"Bir şey bulunamadı 😕",note:"Bilgiler şimdilik İngilizce — tam çeviri yakında!",shown:"{a} / {b} bilgi",lT:"🧊 3D molekül laboratuvarı",lS:"Bir molekül seç ve sürükleyerek döndür!",hint:"🖱️ Döndürmek için sürükle",lbl:"Semboller",spin:"Dönüş",tT:"🧱 Periyodik tablo",tS:"Ayrıntılar için bir elemente dokun",pick:"Bir element seç 👆",mass:"Atom kütlesi",per:"Periyot",grp:"Grup",cat:"Kategori",pT:"🌈 pH göstergesi",pS:"Kaydırıcıyı oynat — çözeltinin rengi değişsin",acid:"Asidik",neu:"Nötr",base:"Bazik",qT:"🏆 Hızlı test",qS:"6 soru — kendini dene!",next:"Sonraki →",again:"↻ Tekrar",res:"Sonuç: {a} / {b}",good:"Doğru! ✅",bad:"Yanlış! ❌",cT:"👨‍🔬 Yazarlar",cS:"Bu sitenin hazırlayıcıları",foot:"Kimyo · Kimya için ❤️ ile yapıldı"},cats:["Atomlar","Elementler","Tepkimeler","İnsan vücudu","Uzay","Günlük hayat","Tarih","Rekorlar"],ec:["Alkali metal","Toprak alkali metal","Geçiş metali","Geçiş sonrası metal","Yarı metal","Ametal","Halojen","Soy gaz","Lantanit","Aktinit"],mols:["Su","Karbondioksit","Metan","Amonyak","Oksijen","Sofra tuzu","Benzen","Etanol"]},
+az:{name:"Azərbaycanca",flag:"🇦🇿",dir:"ltr",t:{navF:"Faktlar",navL:"3D lab",navT:"Cədvəl",navP:"pH",navQ:"Test",navC:"Müəlliflər",tag:"Atomlardan kosmosa maraqlı səyahət — 100+ fakt, 3D molekullar və 24 dil!",b1:"🎲 Təsadüfi fakt",b2:"🧪 Faktlara bax",sF:"fakt",sL:"dil",sM:"molekul",sE:"element",fT:"⚡ Maraqlı kimya faktları",fS:"Axtar, seç və kəşf et!",search:"Fakt axtar...",all:"Hamısı",rand:"🎲 Təsadüfi",copy:"Kopyala",ok:"Kopyalandı ✓",more:"Daha çox",none:"Heç nə tapılmadı 😕",note:"Faktlar hələlik ingiliscədir — tam tərcümə tezliklə!",shown:"{a} / {b} fakt",lT:"🧊 3D molekul laboratoriyası",lS:"Molekulu seç və sürüşdürərək fırlat!",hint:"🖱️ Fırlatmaq üçün dart",lbl:"Simvollar",spin:"Fırlanma",tT:"🧱 Dövri cədvəl",tS:"Elementə toxun — məlumat gör",pick:"Element seç 👆",mass:"Atom kütləsi",per:"Dövr",grp:"Qrup",cat:"Kateqoriya",pT:"🌈 pH göstəricisi",pS:"Sürüşdürücünü hərəkət etdir — məhlulun rəngi dəyişsin",acid:"Turş",neu:"Neytral",base:"Əsasi",qT:"🏆 Blits-test",qS:"6 sual — özünü yoxla!",next:"Növbəti →",again:"↻ Yenidən",res:"Nəticə: {a} / {b}",good:"Düzdür! ✅",bad:"Səhv! ❌",cT:"👨‍🔬 Müəlliflər",cS:"Bu saytın yaradıcıları",foot:"Kimyo · Kimya üçün ❤️ ilə hazırlandı"},cats:["Atomlar","Elementlər","Reaksiyalar","İnsan bədəni","Kosmos","Gündəlik həyat","Tarix","Rekordlar"],ec:["Qələvi metal","Torpaq-qələvi metal","Keçid metalı","Keçid sonrası metal","Yarımmetal","Qeyri-metal","Halogen","Təsirsiz qaz","Lantanoid","Aktinoid"],mols:["Su","Karbon qazı","Metan","Ammonyak","Oksigen","Xörək duzu","Benzol","Etanol"]},
+kk:{name:"Қазақша",flag:"🇰🇿",dir:"ltr",t:{navF:"Фактілер",navL:"3D зертхана",navT:"Кесте",navP:"pH",navQ:"Тест",navC:"Авторлар",tag:"Атомдардан ғарышқа қызықты саяхат — 100+ факт, 3D молекулалар және 24 тіл!",b1:"🎲 Кездейсоқ факт",b2:"🧪 Фактілерді көру",sF:"факт",sL:"тіл",sM:"молекула",sE:"элемент",fT:"⚡ Қызықты химия фактілері",fS:"Ізде, сүз және аш!",search:"Факт іздеу...",all:"Барлығы",rand:"🎲 Кездейсоқ",copy:"Көшіру",ok:"Көшірілді ✓",more:"Тағы көрсету",none:"Ештеңе табылмады 😕",note:"Фактілер әзірге ағылшынша — толық аударма жақында!",shown:"{a} / {b} факт",lT:"🧊 3D молекула зертханасы",lS:"Молекуланы таңдап, тінтуірмен айналдыр!",hint:"🖱️ Айналдыру үшін сүйре",lbl:"Таңбалар",spin:"Айналу",tT:"🧱 Периодтық кесте",tS:"Элементті бас — мәлімет көр",pick:"Элементті таңда 👆",mass:"Атомдық масса",per:"Период",grp:"Топ",cat:"Санат",pT:"🌈 pH индикаторы",pS:"Жүгірткіні жылжыт — ерітінді түсі өзгереді",acid:"Қышқылдық",neu:"Бейтарап",base:"Сілтілік",qT:"🏆 Блиц-тест",qS:"6 сұрақ — өзіңді сына!",next:"Келесі →",again:"↻ Қайта",res:"Нәтиже: {a} / {b}",good:"Дұрыс! ✅",bad:"Қате! ❌",cT:"👨‍🔬 Авторлар",cS:"Осы сайттың жасаушылары",foot:"Kimyo · Химияға ❤️пен жасалған"},cats:["Атомдар","Элементтер","Реакциялар","Адам денесі","Ғарыш","Күнделікті өмір","Тарих","Рекордтар"],ec:["Сілтілік металл","Сілтілік-жер металл","Өтпелі металл","Өтпелі кейінгі металл","Жартылай металл","Бейметалл","Галоген","Инертті газ","Лантаноид","Актиноид"],mols:["Су","Көмірқышқыл газы","Метан","Аммиак","Оттек","Ас тұзы","Бензол","Этанол"]},
+ky:{name:"Кыргызча",flag:"🇰🇬",dir:"ltr",t:{navF:"Фактылар",navL:"3D лаб",navT:"Таблица",navP:"pH",navQ:"Тест",navC:"Авторлор",tag:"Атомдордон космоско кызыктуу саякат — 100+ факт, 3D молекулалар жана 24 тил!",b1:"🎲 Кокустук факт",b2:"🧪 Фактыларды көрүү",sF:"факт",sL:"тил",sM:"молекула",sE:"элемент",fT:"⚡ Кызыктуу химия фактылары",fS:"Изде, чыпкала жана ач!",search:"Факт издөө...",all:"Баары",rand:"🎲 Кокустук",copy:"Көчүрүү",ok:"Көчүрүлдү ✓",more:"Дагы көрсөтүү",none:"Эч нерсе табылган жок 😕",note:"Фактылар азырынча англисче — толук котормо жакында!",shown:"{a} / {b} факт",lT:"🧊 3D молекула лабораториясы",lS:"Молекуланы тандап, чычкан менен айландыр!",hint:"🖱️ Айландыруу үчүн сүйрө",lbl:"Символдор",spin:"Айлануу",tT:"🧱 Мезгилдик таблица",tS:"Элементти бас — маалымат көр",pick:"Элементти танда 👆",mass:"Атомдук масса",per:"Мезгил",grp:"Топ",cat:"Категория",pT:"🌈 pH индикатору",pS:"Сыдыргычты жылдыр — эритменин түсү өзгөрөт",acid:"Кычкыл",neu:"Нейтралдуу",base:"Щелочтуу",qT:"🏆 Блиц-тест",qS:"6 суроо — өзүңдү сына!",next:"Кийинки →",again:"↻ Кайра",res:"Жыйынтык: {a} / {b}",good:"Туура! ✅",bad:"Ката! ❌",cT:"👨‍🔬 Авторлор",cS:"Бул сайттын түзүүчүлөрү",foot:"Kimyo · Химияга ❤️ менен жасалган"},cats:["Атомдор","Элементтер","Реакциялар","Адам денеси","Космос","Күнүмдүк жашоо","Тарых","Рекорддор"],ec:["Щелочтуу металл","Щелочтуу-жер металл","Өтмө металл","Өтмөдөн кийинки металл","Жарым металл","Металл эмес","Галоген","Инерттүү газ","Лантаноид","Актиноид"],mols:["Суу","Көмүр кычкыл газы","Метан","Аммиак","Кычкылтек","Аш тузу","Бензол","Этанол"]},
+tg:{name:"Тоҷикӣ",flag:"🇹🇯",dir:"ltr",t:{navF:"Фактҳо",navL:"3D лаб",navT:"Ҷадвал",navP:"pH",navQ:"Тест",navC:"Муаллифон",tag:"Сафари ҷолиб аз атомҳо то кайҳон — 100+ факт, молекулаҳои 3D ва 24 забон!",b1:"🎲 Факти тасодуфӣ",b2:"🧪 Дидани фактҳо",sF:"факт",sL:"забон",sM:"молекула",sE:"элемент",fT:"⚡ Фактҳои ҷолиби химия",fS:"Ҷустуҷӯ кунед ва кашф кунед!",search:"Ҷустуҷӯи факт...",all:"Ҳама",rand:"🎲 Тасодуфӣ",copy:"Нусха",ok:"Нусха шуд ✓",more:"Боз нишон диҳед",none:"Чизе ёфт нашуд 😕",note:"Фактҳо ҳоло англисӣ — тарҷумаи пурра ба наздикӣ!",shown:"{a} / {b} факт",lT:"🧊 Лабораторияи молекулаҳои 3D",lS:"Молекуларо интихоб кунед ва гардонед!",hint:"🖱️ Барои гардонидан кашед",lbl:"Рамзҳо",spin:"Гардиш",tT:"🧱 Ҷадвали даврӣ",tS:"Элементро пахш кунед — маълумот бинед",pick:"Элементро интихоб кунед 👆",mass:"Массаи атомӣ",per:"Давра",grp:"Гурӯҳ",cat:"Категория",pT:"🌈 Нишондиҳандаи pH",pS:"Ғелонакро ҳаракат диҳед — ранги маҳлул тағйир меёбад",acid:"Турш",neu:"Бетараф",base:"Ишқорӣ",qT:"🏆 Блитс-тест",qS:"6 савол — худро санҷед!",next:"Навбатӣ →",again:"↻ Аз нав",res:"Натиҷа: {a} / {b}",good:"Дуруст! ✅",bad:"Хато! ❌",cT:"👨‍🔬 Муаллифон",cS:"Созандагони ин сайт",foot:"Kimyo · Бо ❤️ барои химия сохта шудааст"},cats:["Атомҳо","Элементҳо","Реаксияҳо","Бадани инсон","Кайҳон","Ҳаёти рӯзмарра","Таърих","Рекордҳо"],ec:["Металли ишқорӣ","Металли ишқорӣ-заминӣ","Металли гузариш","Металли баъдигузариш","Нимметалл","Ғайриметалл","Галоген","Гази инертӣ","Лантаноид","Актиноид"],mols:["Об","Гази карбон","Метан","Аммиак","Оксиген","Намаки ошӣ","Бензол","Этанол"]},
+tk:{name:"Türkmençe",flag:"🇹🇲",dir:"ltr",t:{navF:"Faktlar",navL:"3D lab",navT:"Tablisa",navP:"pH",navQ:"Test",navC:"Awtorlar",tag:"Atomlardan kosmosa gyzykly syýahat — 100+ fakt, 3D molekulalar we 24 dil!",b1:"🎲 Tötänleýin fakt",b2:"🧪 Faktlary gör",sF:"fakt",sL:"dil",sM:"molekula",sE:"element",fT:"⚡ Gyzykly himiýa faktlary",fS:"Gözläň, saýlaň we açyň!",search:"Fakt gözle...",all:"Hemmesi",rand:"🎲 Tötänleýin",copy:"Göçür",ok:"Göçürildi ✓",more:"Ýene görkez",none:"Hiç zat tapylmady 😕",note:"Faktlar häzirlikçe iňlisçe — doly terjime ýakynda!",shown:"{a} / {b} fakt",lT:"🧊 3D molekula laboratoriýasy",lS:"Molekulany saýlaň we syçan bilen aýlaň!",hint:"🖱️ Aýlamak üçin süýräň",lbl:"Nyşanlar",spin:"Aýlanma",tT:"🧱 Periodik tablisa",tS:"Elemente bas — maglumat gör",pick:"Element saýla 👆",mass:"Atom massasy",per:"Period",grp:"Topar",cat:"Kategoriýa",pT:"🌈 pH görkezijisi",pS:"Süýşdirijini süýräň — ergin reňki üýtgeýär",acid:"Turşy",neu:"Bitarap",base:"Aşgar",qT:"🏆 Blits-test",qS:"6 sorag — özüňi syna!",next:"Indiki →",again:"↻ Täzeden",res:"Netije: {a} / {b}",good:"Dogry! ✅",bad:"Ýalňyş! ❌",cT:"👨‍🔬 Awtorlar",cS:"Bu saýtyň döredijileri",foot:"Kimyo · Himiýa üçin ❤️ bilen ýasaldy"},cats:["Atomlar","Elementler","Reaksiýalar","Adam bedeni","Kosmos","Gündelik durmuş","Taryh","Rekordlar"],ec:["Aşgar metaly","Aşgar-ýer metaly","Geçiş metaly","Geçişden soňky metal","Ýarym metal","Metal däl","Galogen","Inert gaz","Lantanoid","Aktinoid"],mols:["Suw","Kömürturşy gazy","Metan","Ammiak","Kislorod","Nahar duzy","Benzol","Etanol"]},
+uk:{name:"Українська",flag:"🇺🇦",dir:"ltr",t:{navF:"Факти",navL:"3D-лаб",navT:"Таблиця",navP:"pH",navQ:"Тест",navC:"Автори",tag:"Цікава подорож від атомів до космосу — 100+ фактів, 3D-молекули та 24 мови!",b1:"🎲 Випадковий факт",b2:"🧪 Дивитися факти",sF:"фактів",sL:"мов",sM:"молекул",sE:"елементів",fT:"⚡ Цікаві факти з хімії",fS:"Шукайте, фільтруйте, відкривайте!",search:"Пошук фактів...",all:"Усі",rand:"🎲 Випадковий",copy:"Копіювати",ok:"Скопійовано ✓",more:"Показати ще",none:"Нічого не знайдено 😕",note:"Факти поки англійською — повний переклад незабаром!",shown:"{a} / {b} фактів",lT:"🧊 3D-лабораторія молекул",lS:"Оберіть молекулу та обертайте мишею!",hint:"🖱️ Тягніть, щоб обертати",lbl:"Символи",spin:"Обертання",tT:"🧱 Періодична таблиця",tS:"Натисніть елемент — побачите деталі",pick:"Оберіть елемент 👆",mass:"Атомна маса",per:"Період",grp:"Група",cat:"Категорія",pT:"🌈 Індикатор pH",pS:"Рухайте повзунок — розчин змінює колір",acid:"Кислотне",neu:"Нейтральне",base:"Лужне",qT:"🏆 Бліц-тест",qS:"6 запитань — перевірте себе!",next:"Далі →",again:"↻ Ще раз",res:"Результат: {a} / {b}",good:"Правильно! ✅",bad:"Помилка! ❌",cT:"👨‍🔬 Автори",cS:"Творці цього сайту",foot:"Kimyo · Зроблено з ❤️ до хімії"},cats:["Атоми","Елементи","Реакції","Тіло людини","Космос","Побут","Історія","Рекорди"],ec:["Лужний метал","Лужноземельний метал","Перехідний метал","Постперехідний метал","Металоїд","Неметал","Галоген","Благородний газ","Лантаноїд","Актиноїд"],mols:["Вода","Вуглекислий газ","Метан","Аміак","Кисень","Кухонна сіль","Бензен","Етанол"]},
+pl:{name:"Polski",flag:"🇵🇱",dir:"ltr",t:{navF:"Ciekawostki",navL:"Lab 3D",navT:"Układ",navP:"pH",navQ:"Quiz",navC:"Autorzy",tag:"Zabawna podróż od atomów po kosmos — 100+ ciekawostek, cząsteczki 3D i 24 języki!",b1:"🎲 Losowa ciekawostka",b2:"🧪 Przeglądaj ciekawostki",sF:"ciekawostek",sL:"języków",sM:"cząsteczek",sE:"pierwiastków",fT:"⚡ Ciekawostki chemiczne",fS:"Szukaj, filtruj i odkrywaj!",search:"Szukaj...",all:"Wszystkie",rand:"🎲 Losowa",copy:"Kopiuj",ok:"Skopiowano ✓",more:"Pokaż więcej",none:"Nic nie znaleziono 😕",note:"Ciekawostki na razie po angielsku — pełne tłumaczenie wkrótce!",shown:"{a} / {b} ciekawostek",lT:"🧊 Laboratorium cząsteczek 3D",lS:"Wybierz cząsteczkę i obracaj ją myszą!",hint:"🖱️ Przeciągnij, aby obrócić",lbl:"Symbole",spin:"Obrót auto",tT:"🧱 Układ okresowy",tS:"Kliknij pierwiastek, aby zobaczyć szczegóły",pick:"Wybierz pierwiastek 👆",mass:"Masa atomowa",per:"Okres",grp:"Grupa",cat:"Kategoria",pT:"🌈 Wskaźnik pH",pS:"Przesuń suwak — roztwór zmieni kolor",acid:"Kwaśny",neu:"Obojętny",base:"Zasadowy",qT:"🏆 Błyskawiczny quiz",qS:"6 pytań — sprawdź się!",next:"Dalej →",again:"↻ Jeszcze raz",res:"Wynik: {a} / {b}",good:"Dobrze! ✅",bad:"Źle! ❌",cT:"👨‍🔬 Autorzy",cS:"Zespół stojący za tą stroną",foot:"Kimyo · Zrobione z ❤️ do chemii"},cats:["Atomy","Pierwiastki","Reakcje","Ciało człowieka","Kosmos","Codzienność","Historia","Rekordy"],ec:["Metal alkaliczny","Ziem alkalicznych","Metal przejściowy","Metal potransycyjny","Półmetal","Niemetal","Halogen","Gaz szlachetny","Lantanowiec","Aktynowiec"],mols:["Woda","Dwutlenek węgla","Metan","Amoniak","Tlen","Sól kuchenna","Benzen","Etanol"]},
+de:{name:"Deutsch",flag:"🇩🇪",dir:"ltr",t:{navF:"Fakten",navL:"3D-Labor",navT:"Tabelle",navP:"pH",navQ:"Quiz",navC:"Autoren",tag:"Eine lustige Reise von Atomen bis zum Kosmos — 100+ Fakten, 3D-Moleküle und 24 Sprachen!",b1:"🎲 Zufallsfakt",b2:"🧪 Fakten entdecken",sF:"Fakten",sL:"Sprachen",sM:"Moleküle",sE:"Elemente",fT:"⚡ Lustige Chemie-Fakten",fS:"Suchen, filtern und entdecken!",search:"Fakten suchen...",all:"Alle",rand:"🎲 Zufall",copy:"Kopieren",ok:"Kopiert ✓",more:"Mehr anzeigen",none:"Nichts gefunden 😕",note:"Fakten vorerst auf Englisch — vollständige Übersetzung folgt bald!",shown:"{a} / {b} Fakten",lT:"🧊 3D-Molekül-Labor",lS:"Molekül wählen und mit der Maus drehen!",hint:"🖱️ Zum Drehen ziehen",lbl:"Symbole",spin:"Auto-Drehung",tT:"🧱 Periodensystem",tS:"Element antippen für Details",pick:"Element wählen 👆",mass:"Atommasse",per:"Periode",grp:"Gruppe",cat:"Kategorie",pT:"🌈 pH-Indikator",pS:"Schieber bewegen — die Lösung wechselt die Farbe",acid:"Sauer",neu:"Neutral",base:"Basisch",qT:"🏆 Blitz-Quiz",qS:"6 Fragen — teste dich!",next:"Weiter →",again:"↻ Nochmal",res:"Ergebnis: {a} / {b}",good:"Richtig! ✅",bad:"Falsch! ❌",cT:"👨‍🔬 Autoren",cS:"Das Team hinter dieser Seite",foot:"Kimyo · Mit ❤️ für die Chemie gemacht"},cats:["Atome","Elemente","Reaktionen","Menschlicher Körper","Weltraum","Alltag","Geschichte","Rekorde"],ec:["Alkalimetall","Erdalkalimetall","Übergangsmetall","Nachübergangsmetall","Halbmetall","Nichtmetall","Halogen","Edelgas","Lanthanoid","Actinoid"],mols:["Wasser","Kohlendioxid","Methan","Ammoniak","Sauerstoff","Kochsalz","Benzol","Ethanol"]},
+es:{name:"Español",flag:"🇪🇸",dir:"ltr",t:{navF:"Datos",navL:"Lab 3D",navT:"Tabla",navP:"pH",navQ:"Quiz",navC:"Autores",tag:"Un viaje divertido de los átomos al cosmos: ¡100+ datos, moléculas 3D y 24 idiomas!",b1:"🎲 Dato aleatorio",b2:"🧪 Explorar datos",sF:"datos",sL:"idiomas",sM:"moléculas",sE:"elementos",fT:"⚡ Datos curiosos de química",fS:"¡Busca, filtra y descubre!",search:"Buscar datos...",all:"Todos",rand:"🎲 Aleatorio",copy:"Copiar",ok:"Copiado ✓",more:"Mostrar más",none:"No se encontró nada 😕",note:"Los datos están en inglés por ahora; ¡traducción completa pronto!",shown:"{a} / {b} datos",lT:"🧊 Laboratorio de moléculas 3D",lS:"¡Elige una molécula y arrástrala para girarla!",hint:"🖱️ Arrastra para girar",lbl:"Símbolos",spin:"Giro automático",tT:"🧱 Tabla periódica",tS:"Toca un elemento para ver detalles",pick:"Elige un elemento 👆",mass:"Masa atómica",per:"Período",grp:"Grupo",cat:"Categoría",pT:"🌈 Indicador de pH",pS:"Mueve el deslizador y mira cambiar el color",acid:"Ácido",neu:"Neutro",base:"Básico",qT:"🏆 Quiz relámpago",qS:"6 preguntas: ¡ponte a prueba!",next:"Siguiente →",again:"↻ Otra vez",res:"Puntuación: {a} / {b}",good:"¡Correcto! ✅",bad:"¡Incorrecto! ❌",cT:"👨‍🔬 Autores",cS:"El equipo detrás de este sitio",foot:"Kimyo · Hecho con ❤️ por la química"},cats:["Átomos","Elementos","Reacciones","Cuerpo humano","Espacio","Vida cotidiana","Historia","Récords"],ec:["Metal alcalino","Alcalinotérreo","Metal de transición","Postransición","Metaloide","No metal","Halógeno","Gas noble","Lantánido","Actínido"],mols:["Agua","Dióxido de carbono","Metano","Amoníaco","Oxígeno","Sal de mesa","Benceno","Etanol"]},
+fr:{name:"Français",flag:"🇫🇷",dir:"ltr",t:{navF:"Anecdotes",navL:"Labo 3D",navT:"Tableau",navP:"pH",navQ:"Quiz",navC:"Auteurs",tag:"Un voyage amusant des atomes au cosmos — 100+ anecdotes, molécules 3D et 24 langues !",b1:"🎲 Anecdote aléatoire",b2:"🧪 Explorer les anecdotes",sF:"anecdotes",sL:"langues",sM:"molécules",sE:"éléments",fT:"⚡ Anecdotes chimiques amusantes",fS:"Cherchez, filtrez et découvrez !",search:"Rechercher...",all:"Toutes",rand:"🎲 Aléatoire",copy:"Copier",ok:"Copié ✓",more:"Afficher plus",none:"Rien trouvé 😕",note:"Anecdotes en anglais pour l'instant — traduction complète bientôt !",shown:"{a} / {b} anecdotes",lT:"🧊 Labo de molécules 3D",lS:"Choisissez une molécule et faites-la tourner !",hint:"🖱️ Glissez pour tourner",lbl:"Symboles",spin:"Rotation auto",tT:"🧱 Tableau périodique",tS:"Touchez un élément pour les détails",pick:"Choisissez un élément 👆",mass:"Masse atomique",per:"Période",grp:"Groupe",cat:"Catégorie",pT:"🌈 Indicateur de pH",pS:"Bougez le curseur — la solution change de couleur",acid:"Acide",neu:"Neutre",base:"Basique",qT:"🏆 Quiz éclair",qS:"6 questions — testez-vous !",next:"Suivant →",again:"↻ Rejouer",res:"Score : {a} / {b}",good:"Correct ! ✅",bad:"Faux ! ❌",cT:"👨‍🔬 Auteurs",cS:"L'équipe derrière ce site",foot:"Kimyo · Fait avec ❤️ pour la chimie"},cats:["Atomes","Éléments","Réactions","Corps humain","Espace","Vie quotidienne","Histoire","Records"],ec:["Métal alcalin","Alcalino-terreux","Métal de transition","Post-transition","Métalloïde","Non-métal","Halogène","Gaz noble","Lanthanide","Actinide"],mols:["Eau","Dioxyde de carbone","Méthane","Ammoniac","Oxygène","Sel de table","Benzène","Éthanol"]},
+it:{name:"Italiano",flag:"🇮🇹",dir:"ltr",t:{navF:"Curiosità",navL:"Lab 3D",navT:"Tavola",navP:"pH",navQ:"Quiz",navC:"Autori",tag:"Un viaggio divertente dagli atomi al cosmo — 100+ curiosità, molecole 3D e 24 lingue!",b1:"🎲 Curiosità casuale",b2:"🧪 Esplora le curiosità",sF:"curiosità",sL:"lingue",sM:"molecole",sE:"elementi",fT:"⚡ Curiosità di chimica",fS:"Cerca, filtra e scopri!",search:"Cerca curiosità...",all:"Tutte",rand:"🎲 Casuale",copy:"Copia",ok:"Copiato ✓",more:"Mostra altre",none:"Nessun risultato 😕",note:"Curiosità in inglese per ora — traduzione completa in arrivo!",shown:"{a} / {b} curiosità",lT:"🧊 Laboratorio molecole 3D",lS:"Scegli una molecola e trascinala per ruotarla!",hint:"🖱️ Trascina per ruotare",lbl:"Simboli",spin:"Rotazione auto",tT:"🧱 Tavola periodica",tS:"Tocca un elemento per i dettagli",pick:"Scegli un elemento 👆",mass:"Massa atomica",per:"Periodo",grp:"Gruppo",cat:"Categoria",pT:"🌈 Indicatore di pH",pS:"Muovi il cursore — la soluzione cambia colore",acid:"Acido",neu:"Neutro",base:"Basico",qT:"🏆 Quiz lampo",qS:"6 domande — mettiti alla prova!",next:"Avanti →",again:"↻ Riprova",res:"Punteggio: {a} / {b}",good:"Corretto! ✅",bad:"Sbagliato! ❌",cT:"👨‍🔬 Autori",cS:"Il team dietro questo sito",foot:"Kimyo · Fatto con ❤️ per la chimica"},cats:["Atomi","Elementi","Reazioni","Corpo umano","Spazio","Vita quotidiana","Storia","Record"],ec:["Metallo alcalino","Alcalino-terroso","Metallo di transizione","Post-transizione","Metalloide","Non metallo","Alogeno","Gas nobile","Lantanide","Attinide"],mols:["Acqua","Anidride carbonica","Metano","Ammoniaca","Ossigeno","Sale da cucina","Benzene","Etanolo"]},
+pt:{name:"Português",flag:"🇵🇹",dir:"ltr",t:{navF:"Fatos",navL:"Lab 3D",navT:"Tabela",navP:"pH",navQ:"Quiz",navC:"Autores",tag:"Uma viagem divertida dos átomos ao cosmos — 100+ fatos, moléculas 3D e 24 idiomas!",b1:"🎲 Fato aleatório",b2:"🧪 Explorar fatos",sF:"fatos",sL:"idiomas",sM:"moléculas",sE:"elementos",fT:"⚡ Curiosidades de química",fS:"Pesquise, filtre e descubra!",search:"Pesquisar fatos...",all:"Todos",rand:"🎲 Aleatório",copy:"Copiar",ok:"Copiado ✓",more:"Mostrar mais",none:"Nada encontrado 😕",note:"Os fatos estão em inglês por enquanto — tradução completa em breve!",shown:"{a} / {b} fatos",lT:"🧊 Laboratório de moléculas 3D",lS:"Escolha uma molécula e arraste para girar!",hint:"🖱️ Arraste para girar",lbl:"Símbolos",spin:"Giro automático",tT:"🧱 Tabela periódica",tS:"Toque em um elemento para ver detalhes",pick:"Escolha um elemento 👆",mass:"Massa atômica",per:"Período",grp:"Grupo",cat:"Categoria",pT:"🌈 Indicador de pH",pS:"Mova o controle e veja a solução mudar de cor",acid:"Ácido",neu:"Neutro",base:"Básico",qT:"🏆 Quiz relâmpago",qS:"6 perguntas — teste-se!",next:"Próxima →",again:"↻ De novo",res:"Pontuação: {a} / {b}",good:"Correto! ✅",bad:"Errado! ❌",cT:"👨‍🔬 Autores",cS:"A equipe por trás deste site",foot:"Kimyo · Feito com ❤️ pela química"},cats:["Átomos","Elementos","Reações","Corpo humano","Espaço","Vida cotidiana","História","Recordes"],ec:["Metal alcalino","Alcalino-terroso","Metal de transição","Pós-transição","Metaloide","Não metal","Halogênio","Gás nobre","Lantanídeo","Actinídeo"],mols:["Água","Dióxido de carbono","Metano","Amônia","Oxigênio","Sal de cozinha","Benzeno","Etanol"]},
+ar:{name:"العربية",flag:"🇸🇦",dir:"rtl",t:{navF:"حقائق",navL:"مختبر 3D",navT:"الجدول",navP:"pH",navQ:"اختبار",navC:"المؤلفون",tag:"رحلة ممتعة من الذرات إلى الكون — أكثر من 100 حقيقة، جزيئات ثلاثية الأبعاد و24 لغة!",b1:"🎲 حقيقة عشوائية",b2:"🧪 استكشف الحقائق",sF:"حقيقة",sL:"لغة",sM:"جزيئات",sE:"عنصرًا",fT:"⚡ حقائق كيميائية ممتعة",fS:"ابحث وصفِّ واكتشف!",search:"ابحث عن حقيقة...",all:"الكل",rand:"🎲 عشوائي",copy:"نسخ",ok:"تم النسخ ✓",more:"عرض المزيد",none:"لا توجد نتائج 😕",note:"الحقائق بالإنجليزية حاليًا — الترجمة الكاملة قريبًا!",shown:"{a} / {b} حقيقة",lT:"🧊 مختبر الجزيئات ثلاثي الأبعاد",lS:"اختر جزيئًا واسحبه لتدويره!",hint:"🖱️ اسحب للتدوير",lbl:"الرموز",spin:"دوران تلقائي",tT:"🧱 الجدول الدوري",tS:"انقر على عنصر لعرض التفاصيل",pick:"اختر عنصرًا 👆",mass:"الكتلة الذرية",per:"الدورة",grp:"المجموعة",cat:"الفئة",pT:"🌈 مؤشر pH",pS:"حرّك المزلاج وشاهد تغيّر لون المحلول",acid:"حمضي",neu:"متعادل",base:"قاعدي",qT:"🏆 اختبار سريع",qS:"6 أسئلة — اختبر نفسك!",next:"التالي →",again:"↻ مجددًا",res:"النتيجة: {a} / {b}",good:"صحيح! ✅",bad:"خطأ! ❌",cT:"👨‍🔬 المؤلفون",cS:"فريق هذا الموقع",foot:"Kimyo · صُنع بحب ❤️ للكيمياء"},cats:["الذرات","العناصر","التفاعلات","جسم الإنسان","الفضاء","الحياة اليومية","التاريخ","الأرقام القياسية"],ec:["فلز قلوي","قلوي ترابي","فلز انتقالي","بعد انتقالي","شبه فلز","لا فلز","هالوجين","غاز نبيل","لانثانيد","أكتينيد"],mols:["الماء","ثاني أكسيد الكربون","الميثان","الأمونيا","الأكسجين","ملح الطعام","البنزين","الإيثانول"]},
+fa:{name:"فارسی",flag:"🇮🇷",dir:"rtl",t:{navF:"دانستنی‌ها",navL:"آزمایشگاه 3D",navT:"جدول",navP:"pH",navQ:"آزمون",navC:"سازندگان",tag:"سفری سرگرم‌کننده از اتم‌ها تا کیهان — بیش از ۱۰۰ دانستنی، مولکول‌های سه‌بعدی و ۲۴ زبان!",b1:"🎲 دانستنی تصادفی",b2:"🧪 دیدن دانستنی‌ها",sF:"دانستنی",sL:"زبان",sM:"مولکول",sE:"عنصر",fT:"⚡ دانستنی‌های جذاب شیمی",fS:"جستجو کنید و کشف کنید!",search:"جستجوی دانستنی...",all:"همه",rand:"🎲 تصادفی",copy:"کپی",ok:"کپی شد ✓",more:"نمایش بیشتر",none:"چیزی یافت نشد 😕",note:"دانستنی‌ها فعلاً انگلیسی هستند — ترجمه کامل به‌زودی!",shown:"{a} / {b} دانستنی",lT:"🧊 آزمایشگاه مولکول‌های سه‌بعدی",lS:"یک مولکول انتخاب کنید و با کشیدن بچرخانید!",hint:"🖱️ برای چرخش بکشید",lbl:"نمادها",spin:"چرخش خودکار",tT:"🧱 جدول تناوبی",tS:"روی عنصر بزنید تا جزئیات را ببینید",pick:"یک عنصر انتخاب کنید 👆",mass:"جرم اتمی",per:"دوره",grp:"گروه",cat:"دسته",pT:"🌈 شناساگر pH",pS:"لغزنده را حرکت دهید — رنگ محلول عوض می‌شود",acid:"اسیدی",neu:"خنثی",base:"بازی",qT:"🏆 آزمون سریع",qS:"۶ پرسش — خودتان را بسنجید!",next:"بعدی →",again:"↻ دوباره",res:"نتیجه: {a} / {b}",good:"درست! ✅",bad:"نادرست! ❌",cT:"👨‍🔬 سازندگان",cS:"سازندگان این سایت",foot:"Kimyo · ساخته‌شده با ❤️ برای شیمی"},cats:["اتم‌ها","عنصرها","واکنش‌ها","بدن انسان","فضا","زندگی روزمره","تاریخ","رکوردها"],ec:["فلز قلیایی","قلیایی خاکی","فلز واسطه","پساواسطه","شبه‌فلز","نافلز","هالوژن","گاز نجیب","لانتانید","اکتینید"],mols:["آب","دی‌اکسید کربن","متان","آمونیاک","اکسیژن","نمک خوراکی","بنزن","اتانول"]},
+hi:{name:"हिन्दी",flag:"🇮🇳",dir:"ltr",t:{navF:"रोचक तथ्य",navL:"3D लैब",navT:"तालिका",navP:"pH",navQ:"क्विज़",navC:"निर्माता",tag:"परमाणुओं से ब्रह्मांड तक मज़ेदार यात्रा — 100+ तथ्य, 3D अणु और 24 भाषाएँ!",b1:"🎲 यादृच्छिक तथ्य",b2:"🧪 तथ्य देखें",sF:"तथ्य",sL:"भाषाएँ",sM:"अणु",sE:"तत्व",fT:"⚡ मज़ेदार रसायन तथ्य",fS:"खोजें, छाँटें और जानें!",search:"तथ्य खोजें...",all:"सभी",rand:"🎲 यादृच्छिक",copy:"कॉपी",ok:"कॉपी हो गया ✓",more:"और दिखाएँ",none:"कुछ नहीं मिला 😕",note:"तथ्य अभी अंग्रेज़ी में हैं — पूरा अनुवाद जल्द आएगा!",shown:"{a} / {b} तथ्य",lT:"🧊 3D अणु प्रयोगशाला",lS:"अणु चुनें और खींचकर घुमाएँ!",hint:"🖱️ घुमाने के लिए खींचें",lbl:"प्रतीक",spin:"घुमाव",tT:"🧱 आवर्त सारणी",tS:"तत्व पर टैप करें — जानकारी देखें",pick:"तत्व चुनें 👆",mass:"परमाणु द्रव्यमान",per:"आवर्त",grp:"समूह",cat:"श्रेणी",pT:"🌈 pH सूचक",pS:"स्लाइडर चलाएँ — विलयन का रंग बदलें",acid:"अम्लीय",neu:"उदासीन",base:"क्षारीय",qT:"🏆 ब्लिट्ज़ क्विज़",qS:"6 प्रश्न — खुद को परखें!",next:"अगला →",again:"↻ फिर से",res:"स्कोर: {a} / {b}",good:"सही! ✅",bad:"गलत! ❌",cT:"👨‍🔬 निर्माता",cS:"इस साइट के रचयिता",foot:"Kimyo · रसायन के लिए ❤️ से बनाया गया"},cats:["परमाणु","तत्व","अभिक्रियाएँ","मानव शरीर","अंतरिक्ष","दैनिक जीवन","इतिहास","रिकॉर्ड"],ec:["क्षार धातु","क्षारीय मृदा धातु","संक्रमण धातु","उत्तर-संक्रमण धातु","उपधातु","अधातु","हैलोजन","अक्रिय गैस","लैंथेनाइड","ऐक्टिनाइड"],mols:["पानी","कार्बन डाइऑक्साइड","मीथेन","अमोनिया","ऑक्सीजन","नमक","बेंज़ीन","एथेनॉल"]},
+bn:{name:"বাংলা",flag:"🇧🇩",dir:"ltr",t:{navF:"মজার তথ্য",navL:"3D ল্যাব",navT:"সারণি",navP:"pH",navQ:"কুইজ",navC:"নির্মাতা",tag:"পরমাণু থেকে মহাকাশ পর্যন্ত মজার যাত্রা — ১০০+ তথ্য, 3D অণু ও ২৪টি ভাষা!",b1:"🎲 এলোমেলো তথ্য",b2:"🧪 তথ্য দেখুন",sF:"তথ্য",sL:"ভাষা",sM:"অণু",sE:"মৌল",fT:"⚡ মজার রসায়ন তথ্য",fS:"খুঁজুন, বাছাই করুন, আবিষ্কার করুন!",search:"তথ্য খুঁজুন...",all:"সব",rand:"🎲 এলোমেলো",copy:"কপি",ok:"কপি হয়েছে ✓",more:"আরও দেখুন",none:"কিছু পাওয়া যায়নি 😕",note:"তথ্য আপাতত ইংরেজিতে — পূর্ণ অনুবাদ শীঘ্রই আসছে!",shown:"{a} / {b} তথ্য",lT:"🧊 3D অণু গবেষণাগার",lS:"অণু বেছে নিন এবং টেনে ঘোরান!",hint:"🖱️ ঘোরাতে টানুন",lbl:"প্রতীক",spin:"ঘূর্ণন",tT:"🧱 পর্যায় সারণি",tS:"মৌলে ট্যাপ করুন — বিস্তারিত দেখুন",pick:"একটি মৌল বেছে নিন 👆",mass:"পারমাণবিক ভর",per:"পর্যায়",grp:"গ্রুপ",cat:"শ্রেণি",pT:"🌈 pH নির্দেশক",pS:"স্লাইডার সরান — দ্রবণের রং বদলান",acid:"অম্লীয়",neu:"নিরপেক্ষ",base:"ক্ষারীয়",qT:"🏆 ব্লিটজ কুইজ",qS:"৬টি প্রশ্ন — নিজেকে যাচাই করুন!",next:"পরবর্তী →",again:"↻ আবার",res:"স্কোর: {a} / {b}",good:"সঠিক! ✅",bad:"ভুল! ❌",cT:"👨‍🔬 নির্মাতা",cS:"এই সাইটের নির্মাতারা",foot:"Kimyo · রসায়নের জন্য ❤️ দিয়ে তৈরি"},cats:["পরমাণু","মৌল","বিক্রিয়া","মানবদেহ","মহাকাশ","দৈনন্দিন জীবন","ইতিহাস","রেকর্ড"],ec:["ক্ষার ধাতু","মৃত্তিকা ক্ষার ধাতু","অবস্থান্তর ধাতু","উত্তর-অবস্থান্তর ধাতু","উপধাতু","অধাতু","হ্যালোজেন","নিষ্ক্রিয় গ্যাস","ল্যান্থানাইড","অ্যাক্টিনাইড"],mols:["পানি","কার্বন ডাই-অক্সাইড","মিথেন","অ্যামোনিয়া","অক্সিজেন","লবণ","বেনজিন","ইথানল"]},
+zh:{name:"中文",flag:"🇨🇳",dir:"ltr",t:{navF:"趣味知识",navL:"3D实验室",navT:"周期表",navP:"pH",navQ:"测验",navC:"作者",tag:"从原子到宇宙的趣味之旅 — 100+条知识、3D分子和24种语言！",b1:"🎲 随机知识",b2:"🧪 浏览知识",sF:"条知识",sL:"种语言",sM:"个分子",sE:"种元素",fT:"⚡ 有趣的化学知识",fS:"搜索、筛选、发现！",search:"搜索知识...",all:"全部",rand:"🎲 随机",copy:"复制",ok:"已复制 ✓",more:"显示更多",none:"没有找到 😕",note:"知识暂为英文 — 完整翻译即将推出！",shown:"{a} / {b} 条",lT:"🧊 3D分子实验室",lS:"选择分子并拖动旋转！",hint:"🖱️ 拖动旋转",lbl:"符号",spin:"自动旋转",tT:"🧱 元素周期表",tS:"点击元素查看详情",pick:"请选择元素 👆",mass:"原子质量",per:"周期",grp:"族",cat:"类别",pT:"🌈 pH指示剂",pS:"拖动滑块 — 观察溶液变色",acid:"酸性",neu:"中性",base:"碱性",qT:"🏆 快速测验",qS:"6道题 — 挑战自己！",next:"下一题 →",again:"↻ 再来一次",res:"得分：{a} / {b}",good:"正确！✅",bad:"错误！❌",cT:"👨‍🔬 作者",cS:"本网站的创建者",foot:"Kimyo · 用 ❤️ 为化学而作"},cats:["原子","元素","反应","人体","太空","日常生活","历史","纪录"],ec:["碱金属","碱土金属","过渡金属","后过渡金属","类金属","非金属","卤素","稀有气体","镧系","锕系"],mols:["水","二氧化碳","甲烷","氨","氧气","食盐","苯","乙醇"]},
+ja:{name:"日本語",flag:"🇯🇵",dir:"ltr",t:{navF:"豆知識",navL:"3Dラボ",navT:"周期表",navP:"pH",navQ:"クイズ",navC:"作者",tag:"原子から宇宙への楽しい旅 — 100以上の豆知識、3D分子、24言語！",b1:"🎲 ランダム豆知識",b2:"🧪 豆知識を見る",sF:"豆知識",sL:"言語",sM:"分子",sE:"元素",fT:"⚡ 楽しい化学の豆知識",fS:"検索・絞り込み・発見！",search:"豆知識を検索...",all:"すべて",rand:"🎲 ランダム",copy:"コピー",ok:"コピーしました ✓",more:"もっと見る",none:"見つかりませんでした 😕",note:"豆知識は現在英語です — 完全翻訳は近日公開！",shown:"{a} / {b} 件",lT:"🧊 3D分子ラボ",lS:"分子を選んでドラッグで回転！",hint:"🖱️ ドラッグで回転",lbl:"記号",spin:"自動回転",tT:"🧱 周期表",tS:"元素をクリックして詳細を見る",pick:"元素を選んでね 👆",mass:"原子量",per:"周期",grp:"族",cat:"分類",pT:"🌈 pH指示薬",pS:"スライダーを動かして溶液の色を変えよう",acid:"酸性",neu:"中性",base:"塩基性",qT:"🏆 クイズ",qS:"6問 — 腕試し！",next:"次へ →",again:"↻ もう一度",res:"スコア：{a} / {b}",good:"正解！✅",bad:"不正解！❌",cT:"👨‍🔬 作者",cS:"このサイトの作成者",foot:"Kimyo · 化学への ❤️ を込めて"},cats:["原子","元素","反応","人体","宇宙","日常生活","歴史","記録"],ec:["アルカリ金属","アルカリ土類金属","遷移金属","遷移後金属","半金属","非金属","ハロゲン","希ガス","ランタノイド","アクチノイド"],mols:["水","二酸化炭素","メタン","アンモニア","酸素","食塩","ベンゼン","エタノール"]},
+ko:{name:"한국어",flag:"🇰🇷",dir:"ltr",t:{navF:"지식",navL:"3D 실험실",navT:"주기율표",navP:"pH",navQ:"퀴즈",navC:"제작자",tag:"원자에서 우주까지 즐거운 여행 — 100+ 지식, 3D 분자, 24개 언어!",b1:"🎲 랜덤 지식",b2:"🧪 지식 보기",sF:"지식",sL:"언어",sM:"분자",sE:"원소",fT:"⚡ 재미있는 화학 지식",fS:"검색하고, 필터하고, 발견하세요!",search:"지식 검색...",all:"전체",rand:"🎲 랜덤",copy:"복사",ok:"복사됨 ✓",more:"더 보기",none:"결과가 없습니다 😕",note:"지식은 현재 영어로 제공됩니다 — 전체 번역 곧 공개!",shown:"{a} / {b} 개",lT:"🧊 3D 분자 실험실",lS:"분자를 선택하고 드래그로 회전하세요!",hint:"🖱️ 드래그하여 회전",lbl:"기호",spin:"자동 회전",tT:"🧱 주기율표",tS:"원소를 클릭하면 정보가 나와요",pick:"원소를 선택하세요 👆",mass:"원자량",per:"주기",grp:"족",cat:"분류",pT:"🌈 pH 지시약",pS:"슬라이더를 움직여 용액 색을 바꿔 보세요",acid:"산성",neu:"중성",base:"염기성",qT:"🏆 퀴즈",qS:"6문제 — 실력을 테스트!",next:"다음 →",again:"↻ 다시",res:"점수: {a} / {b}",good:"정답! ✅",bad:"오답! ❌",cT:"👨‍🔬 제작자",cS:"이 사이트를 만든 사람들",foot:"Kimyo · 화학을 향한 ❤️로 제작"},cats:["원자","원소","반응","인체","우주","일상생활","역사","기록"],ec:["알칼리 금속","알칼리 토금속","전이 금속","전이 후 금속","준금속","비금속","할로젠","비활성 기체","란타넘족","악티늄족"],mols:["물","이산화 탄소","메테인","암모니아","산소","소금","벤젠","에탄올"]},
+id:{name:"Bahasa Indonesia",flag:"🇮🇩",dir:"ltr",t:{navF:"Fakta",navL:"Lab 3D",navT:"Tabel",navP:"pH",navQ:"Kuis",navC:"Pembuat",tag:"Perjalanan seru dari atom ke kosmos — 100+ fakta, molekul 3D, dan 24 bahasa!",b1:"🎲 Fakta acak",b2:"🧪 Jelajahi fakta",sF:"fakta",sL:"bahasa",sM:"molekul",sE:"unsur",fT:"⚡ Fakta kimia seru",fS:"Cari, saring, dan temukan!",search:"Cari fakta...",all:"Semua",rand:"🎲 Acak",copy:"Salin",ok:"Tersalin ✓",more:"Tampilkan lagi",none:"Tidak ditemukan 😕",note:"Fakta sementara dalam bahasa Inggris — terjemahan penuh segera!",shown:"{a} / {b} fakta",lT:"🧊 Lab molekul 3D",lS:"Pilih molekul dan seret untuk memutar!",hint:"🖱️ Seret untuk memutar",lbl:"Simbol",spin:"Putar otomatis",tT:"🧱 Tabel periodik",tS:"Ketuk unsur untuk melihat detail",pick:"Pilih unsur 👆",mass:"Massa atom",per:"Periode",grp:"Golongan",cat:"Kategori",pT:"🌈 Indikator pH",pS:"Geser slider — lihat larutan berubah warna",acid:"Asam",neu:"Netral",base:"Basa",qT:"🏆 Kuis kilat",qS:"6 pertanyaan — uji dirimu!",next:"Berikutnya →",again:"↻ Ulangi",res:"Skor: {a} / {b}",good:"Benar! ✅",bad:"Salah! ❌",cT:"👨‍🔬 Pembuat",cS:"Tim di balik situs ini",foot:"Kimyo · Dibuat dengan ❤️ untuk kimia"},cats:["Atom","Unsur","Reaksi","Tubuh manusia","Luar angkasa","Kehidupan sehari-hari","Sejarah","Rekor"],ec:["Logam alkali","Alkali tanah","Logam transisi","Pascatransisi","Metaloid","Nonlogam","Halogen","Gas mulia","Lantanida","Aktinida"],mols:["Air","Karbon dioksida","Metana","Amonia","Oksigen","Garam dapur","Benzena","Etanol"]}
+};
+const ORDER=["uz","en","ru","tr","az","kk","ky","tg","tk","uk","pl","de","es","fr","it","pt","ar","fa","hi","bn","zh","ja","ko","id"];
+
+/* ============ 104 FACTS: [category, uz, en, ru] ============ */
+const EMO=["⚛️","🧪","💥","🫀","🌌","🏠","📜","🏆"];
+const F=[
+[0,"Atom massasining 99,9% dan ortigʻi yadroda joylashgan.","Over 99.9% of an atom's mass sits in its nucleus.","Более 99,9% массы атома сосредоточено в ядре."],
+[0,"Atom asosan boʻshliq: yadro — stadion oʻrtasidagi noʻxatdek.","An atom is mostly empty space — its nucleus is like a pea in a stadium.","Атом почти пуст: ядро — как горошина посреди стадиона."],
+[0,"Elektronlar aniq orbitada emas — ular «elektron buluti» hosil qiladi.","Electrons don't follow neat orbits — they form an electron cloud.","Электроны не летают по чётким орбитам — они образуют электронное облако."],
+[0,"Bir stakan suvda taxminan 10²⁵ ta atom bor.","A glass of water contains roughly 10²⁵ atoms.","В стакане воды примерно 10²⁵ атомов."],
+[0,"Vodorod — eng oddiy atom: bitta proton va bitta elektron.","Hydrogen is the simplest atom: one proton and one electron.","Водород — простейший атом: один протон и один электрон."],
+[0,"Proton musbat, elektron manfiy, neytron esa neytral zaryadli.","Protons are positive, electrons negative, neutrons neutral.","Протон заряжен «+», электрон «−», нейтрон нейтрален."],
+[0,"Atom diametri taxminan 0,1 nanometr — juda kichik!","An atom is about 0.1 nanometers across — incredibly tiny!","Диаметр атома около 0,1 нанометра — невероятно мало!"],
+[0,"Izotoplar — protonlari bir xil, neytronlari har xil atomlar.","Isotopes are atoms with the same protons but different neutrons.","Изотопы — атомы с одинаковым числом протонов, но разным числом нейтронов."],
+[0,"Uglerod-14 arxeologlarga topilmalar yoshini aniqlashga yordam beradi.","Carbon-14 helps archaeologists date ancient finds.","Углерод-14 помогает археологам датировать находки."],
+[0,"Atomlarni oddiy mikroskopda koʻrib boʻlmaydi — ular yorugʻlik toʻlqinidan kichik.","Ordinary microscopes can't see atoms — they are smaller than light waves.","Обычный микроскоп атомов не видит: они меньше световой волны."],
+[0,"Kimyoviy bogʻ — atomlarning elektronlarni boʻlishishi yoki almashishi.","A chemical bond is atoms sharing or trading electrons.","Химическая связь — это обмен или совместное владение электронами."],
+[0,"Alohida atomlarning ilk suratlari 1970-yilda olingan.","The first images of individual atoms were taken in 1970.","Первые снимки отдельных атомов получены в 1970 году."],
+[1,"Davriy jadvalda 118 ta element tasdiqlangan.","The periodic table has 118 confirmed elements.","В периодической таблице 118 подтверждённых элементов."],
+[1,"Vodorod koinotdagi oddiy moddaning ~75% ini tashkil qiladi.","Hydrogen makes up ~75% of the universe's normal matter.","Водород — около 75% обычного вещества Вселенной."],
+[1,"Geliy avval Quyoshda, keyin Yerda kashf etilgan.","Helium was discovered in the Sun before it was found on Earth.","Гелий открыли сначала на Солнце, а потом на Земле."],
+[1,"Oltin shu qadar yumshoqki, uni deyarli shaffof folgaga aylantirish mumkin.","Gold is so soft it can be beaten into almost transparent foil.","Золото можно раскатать в почти прозрачную фольгу."],
+[1,"Simob — xona haroratida suyuq boʻlgan yagona metall.","Mercury is the only metal that is liquid at room temperature.","Ртуть — единственный металл, жидкий при комнатной температуре."],
+[1,"Galliy qoʻlingizda eriydi: erish harorati ~30°C.","Gallium melts in your hand — its melting point is ~30 °C.","Галлий плавится прямо в руке: температура плавления ~30 °C."],
+[1,"Kislorod Yer atmosferasining ~21% ini egallaydi.","Oxygen makes up ~21% of Earth's atmosphere.","Кислород составляет ~21% атмосферы Земли."],
+[1,"Havoning ~78% i azotdan iborat.","About 78% of air is nitrogen.","Около 78% воздуха — азот."],
+[1,"Olmos ham, grafit ham sof uglerod — faqat tuzilishi har xil.","Diamond and graphite are both pure carbon — just arranged differently.","Алмаз и графит — чистый углерод, просто по-разному уложенный."],
+[1,"Volfram eng qiyin eriydigan metall: ~3422°C.","Tungsten is the hardest-to-melt metal: ~3422 °C.","Вольфрам — самый тугоплавкий металл: ~3422 °C."],
+[1,"Natriy suv bilan shiddatli, baʼzan portlash bilan reaksiyaga kirishadi.","Sodium reacts violently with water — sometimes explosively.","Натрий бурно, иногда со взрывом, реагирует с водой."],
+[1,"Xlor — zaharli gaz, ammo u osh tuzi tarkibida bor.","Chlorine is a toxic gas, yet it is part of table salt.","Хлор — ядовитый газ, но он входит в состав поваренной соли."],
+[1,"Osmiy — eng zich tabiiy element.","Osmium is the densest naturally occurring element.","Осмий — самый плотный природный элемент."],
+[1,"Oganeson (118) — hozircha eng ogʻir element.","Oganesson (118) is the heaviest element so far.","Оганесон (118) — пока самый тяжёлый элемент."],
+[1,"Teknetsiy — sunʼiy yoʻl bilan olingan birinchi element (1937).","Technetium was the first artificially produced element (1937).","Технеций — первый искусственно полученный элемент (1937)."],
+[1,"Yer poʻstlogʻida bir vaqtning oʻzida atigi ~30 g fransiy bor.","Only about 30 g of francium exists in Earth's crust at any moment.","В земной коре единовременно существует лишь ~30 г франция."],
+[1,"Koʻp belgilar lotincha nomlardan olingan: Fe — ferrum, Au — aurum.","Many symbols come from Latin: Fe = ferrum, Au = aurum.","Многие символы — из латыни: Fe = ferrum, Au = aurum."],
+[2,"Yonish — kislorod bilan tez oksidlanish reaksiyasi.","Burning is a rapid oxidation reaction with oxygen.","Горение — быстрая реакция окисления кислородом."],
+[2,"Zanglash — temirning sekin oksidlanishi.","Rusting is iron oxidizing slowly.","Ржавление — медленное окисление железа."],
+[2,"Suv vodorod yonishidan hosil boʻladi: 2H₂ + O₂ → 2H₂O.","Water forms when hydrogen burns: 2H₂ + O₂ → 2H₂O.","Вода образуется при горении водорода: 2H₂ + O₂ → 2H₂O."],
+[2,"Katalizator reaksiyani tezlashtiradi, lekin oʻzi sarflanmaydi.","A catalyst speeds up a reaction without being used up.","Катализатор ускоряет реакцию, но сам не расходуется."],
+[2,"Sirka va soda aralashmasi CO₂ gazini «vulqon» kabi chiqaradi.","Vinegar mixed with baking soda fizzes out CO₂ like a volcano.","Уксус с содой шипят, выделяя CO₂, как вулкан."],
+[2,"Fotosintez yorugʻlik energiyasini kimyoviy energiyaga aylantiradi.","Photosynthesis converts light energy into chemical energy.","Фотосинтез превращает энергию света в химическую энергию."],
+[2,"Ekzotermik reaksiya issiqlik chiqaradi, endotermik esa yutadi.","Exothermic reactions release heat; endothermic ones absorb it.","Экзотермические реакции выделяют тепло, эндотермические — поглощают."],
+[2,"Neytrallanish: kislota + ishqor → tuz + suv.","Neutralization: acid + base → salt + water.","Нейтрализация: кислота + щёлочь → соль + вода."],
+[2,"Portlash — gazlarning oʻta tez kengayishi.","An explosion is an ultra-fast expansion of gases.","Взрыв — сверхбыстрое расширение газов."],
+[2,"Elektroliz suvni vodorod va kislorodga ajratadi.","Electrolysis splits water into hydrogen and oxygen.","Электролиз расщепляет воду на водород и кислород."],
+[2,"Polimerizatsiya kichik molekulalardan plastik zanjirlar yasaydi.","Polymerization links small molecules into long plastic chains.","Полимеризация связывает маленькие молекулы в длинные цепи пластиков."],
+[2,"pH 7 — neytral; pastroq — kislotali, yuqoriroq — ishqoriy muhit.","pH 7 is neutral; lower is acidic, higher is basic.","pH 7 — нейтрально; ниже — кисло, выше — щелочно."],
+[3,"Inson tanasining ~60% i suvdan iborat.","The human body is about 60% water.","Тело человека примерно на 60% состоит из воды."],
+[3,"Kislorod, uglerod, vodorod va azot — tana massasining ~96% i.","Oxygen, carbon, hydrogen and nitrogen make up ~96% of your body mass.","Кислород, углерод, водород и азот — около 96% массы тела."],
+[3,"Bitta hujayradagi DNK choʻzilsa, ~2 metr keladi.","The DNA in a single cell stretches to about 2 meters.","ДНК одной клетки в растянутом виде — около 2 метров."],
+[3,"Qonning qizil rangi gemoglobin tarkibidagi temirdan.","Blood is red thanks to the iron in hemoglobin.","Кровь красная благодаря железу в гемоглобине."],
+[3,"Oshqozon shirasi kuchli kislota: pH ~1,5–3,5.","Stomach juice is a strong acid: pH ~1.5–3.5.","Желудочный сок — сильная кислота: pH ~1,5–3,5."],
+[3,"Fermentlar — organizmning biologik katalizatorlari.","Enzymes are the body's biological catalysts.","Ферменты — биологические катализаторы организма."],
+[3,"Suyaklarga qattiqlikni kalsiy fosfat beradi.","Calcium phosphate gives bones their hardness.","Твёрдость костям придаёт фосфат кальция."],
+[3,"Nerv signallari — natriy va kaliy ionlarining oqimi.","Nerve signals are flows of sodium and potassium ions.","Нервные сигналы — потоки ионов натрия и калия."],
+[3,"Teringiz quyosh nurida D vitaminini sintez qiladi.","Your skin synthesizes vitamin D in sunlight.","Кожа синтезирует витамин D на солнце."],
+[3,"Adrenalin — «jang yoki qoch» reaksiyasining molekulasi.","Adrenaline is the fight-or-flight molecule.","Адреналин — молекула реакции «бей или беги»."],
+[3,"Serotonin va dofamin kayfiyat kimyosini boshqaradi.","Serotonin and dopamine help run your mood chemistry.","Серотонин и дофамин управляют химией настроения."],
+[3,"Nafas bilan chiqadigan CO₂ — hujayralar ishi mahsuloti.","Exhaled CO₂ is a product of your cells at work.","Выдыхаемый CO₂ — продукт работы клеток."],
+[4,"Quyosh har sekundda ~600 mln tonna vodorodni geliyga aylantiradi.","The Sun turns ~600 million tons of hydrogen into helium every second.","Солнце каждую секунду превращает ~600 млн тонн водорода в гелий."],
+[4,"Koinotdagi oltin neytron yulduzlar toʻqnashuvida tugʻiladi.","Cosmic gold is forged in neutron-star collisions.","Космическое золото рождается при столкновении нейтронных звёзд."],
+[4,"Mars qizil — chunki sirti zanglagan temirga boy.","Mars is red because its surface is rich in rusty iron.","Марс красный, потому что его поверхность богата ржавым железом."],
+[4,"Venera bulutlari sulfat kislotasi tomchilaridan iborat.","Venus's clouds contain droplets of sulfuric acid.","Облака Венеры состоят из капелек серной кислоты."],
+[4,"Titan koʻllari suvdan emas, suyuq metandan.","Titan's lakes are made of liquid methane, not water.","Озёра Титана — из жидкого метана, а не воды."],
+[4,"Kometalar — muz, chang va organikadan iborat «iflos qor sharlari».","Comets are dirty snowballs of ice, dust and organics.","Кометы — «грязные снежки» изо льда, пыли и органики."],
+[4,"Yulduzlararo bulutlarda etil spirti molekulalari ham topilgan.","Ethyl alcohol molecules have been found in interstellar clouds.","В межзвёздных облаках найдены молекулы этилового спирта."],
+[4,"Yupiter va Saturn asosan vodorod va geliydan tuzilgan.","Jupiter and Saturn are made mostly of hydrogen and helium.","Юпитер и Сатурн состоят в основном из водорода и гелия."],
+[4,"Oy tuprogʻida geliy-3 bor — kelajak termoyadro yoqilgʻisi nomzodi.","Lunar soil holds helium-3, a candidate fuel for future fusion.","В лунном грунте есть гелий-3 — кандидат в топливо будущего термояда."],
+[4,"Koʻk yulduzlar qizil yulduzlardan issiqroq.","Blue stars are hotter than red stars.","Голубые звёзды горячее красных."],
+[4,"Koinotdagi eng keng tarqalgan molekula — H₂.","H₂ is the most common molecule in the universe.","H₂ — самая распространённая молекула во Вселенной."],
+[4,"Astronavtlar kosmik sayrdan keyin skafandrdan «kuygan metall» hidini sezishgan.","After spacewalks astronauts have smelled burnt metal on their suits.","После выхода в космос астронавты чувствовали на скафандрах запах «жжёного металла»."],
+[5,"Sovun molekulasining bir uchi suvni, ikkinchisi yogʻni «sevadi».","A soap molecule has a water-loving end and a grease-loving end.","У молекулы мыла один конец «любит» воду, другой — жир."],
+[5,"Piyoz toʻgʻralganda koʻzni yoshlantiruvchi oltingugurt birikmalari uchadi.","Cutting onions releases sulfur compounds that make you cry.","При нарезке лука выделяются сернистые соединения — от них слёзы."],
+[5,"Non qobigʻining hidi — Mayyar reaksiyasi mahsuloti.","Bread crust aroma comes from the Maillard reaction.","Аромат хлебной корочки — результат реакции Майяра."],
+[5,"Banan kaliy-40 izotopi tufayli ozgina radioaktiv.","Bananas are slightly radioactive thanks to potassium-40.","Бананы слегка радиоактивны из-за калия-40."],
+[5,"Muz suvdan yengil — shuning uchun suvda suzadi.","Ice is less dense than water — that's why it floats.","Лёд менее плотный, чем вода, — поэтому он плавает."],
+[5,"Kofein miyadagi «charchadim» signalini bloklab, uni aldaydi.","Caffeine tricks the brain by blocking its tired signal.","Кофеин обманывает мозг, блокируя сигнал усталости."],
+[5,"Qalampir achchigʻi — taʼm emas, ogʻriq: kapsaitsin issiqlik retseptorlarini yoqadi.","Chili heat is pain, not taste: capsaicin fires your heat receptors.","Жгучесть перца — боль, а не вкус: капсаицин включает рецепторы тепла."],
+[5,"Asal deyarli buzilmaydi: namligi kam, kislotaliligi yuqori.","Honey almost never spoils: low water, high acidity.","Мёд почти не портится: мало воды, высокая кислотность."],
+[5,"Tuxum pishganda oqsillar denaturatsiyalanadi — qaytmas jarayon.","Cooking an egg denatures its proteins — an irreversible change.","При варке яйца белки денатурируют — это необратимо."],
+[5,"Gazli ichimlik pufakchalari — erigan CO₂ ning qochishi.","Soda bubbles are dissolved CO₂ escaping the liquid.","Пузырьки газировки — растворённый CO₂, покидающий жидкость."],
+[5,"Yomgʻir hidi — tuproqdagi geosmin molekulasi.","The smell of rain comes from a soil molecule called geosmin.","Запах дождя — молекула геосмин из почвы."],
+[5,"Limon nordonligi — limon kislotasi.","Lemon sourness is citric acid at work.","Кислинка лимона — лимонная кислота."],
+[5,"Tish pastasidagi ftor emalni mustahkamlaydi.","Fluoride in toothpaste strengthens tooth enamel.","Фтор в зубной пасте укрепляет эмаль."],
+[5,"Sabzi rangi — beta-karotin, A vitamini manbasi.","Carrot orange is beta-carotene, a source of vitamin A.","Оранжевый цвет моркови — бета-каротин, источник витамина A."],
+[5,"Kumush buyumlar havodagi oltingugurt bilan reaksiyadan qorayadi.","Silver tarnishes by reacting with sulfur in the air.","Серебро темнеет из-за реакции с серой в воздухе."],
+[5,"Quruq muz — qattiq CO₂: u erimasdan toʻgʻri bugʻga aylanadi.","Dry ice is solid CO₂ — it sublimates straight into gas.","Сухой лёд — твёрдый CO₂: он сразу превращается в газ."],
+[6,"Alkimyogarlar oltin izlab, kimyo faniga poydevor qoʻyishdi.","Alchemists hunting for gold laid the foundations of chemistry.","Алхимики в погоне за золотом заложили основы химии."],
+[6,"«Kimyo» soʻzi arabcha al-kimiyo nomidan kelib chiqqan.","The word chemistry comes from the Arabic al-kīmiyā.","Слово «химия» происходит от арабского «аль-кимия»."],
+[6,"Jabir ibn Hayyon kimyo fanining otalaridan biri hisoblanadi.","Jabir ibn Hayyan is considered one of the fathers of chemistry.","Джабир ибн Хайян считается одним из отцов химии."],
+[6,"Ar-Roziy moddalarni tasniflab, laboratoriya usullarini yozib qoldirgan.","Al-Razi classified substances and wrote down laboratory methods.","Ар-Рази классифицировал вещества и описал лабораторные методы."],
+[6,"Beruniy minerallar zichligini juda aniq oʻlchagan.","Al-Biruni measured mineral densities with remarkable precision.","Аль-Бируни с высокой точностью измерял плотность минералов."],
+[6,"Mendeleyev davriy jadvalni 1869-yilda taklif qilgan.","Mendeleev proposed the periodic table in 1869.","Менделеев предложил периодическую таблицу в 1869 году."],
+[6,"Mendeleyev hali kashf etilmagan elementlar uchun joy qoldirgan.","Mendeleev left gaps for elements not yet discovered.","Менделеев оставил пустые места для ещё не открытых элементов."],
+[6,"Mariya Kyuri ikki xil fan boʻyicha Nobel olgan yagona inson.","Marie Curie is the only person with Nobel Prizes in two different sciences.","Мария Кюри — единственный человек с Нобелевскими премиями по двум разным наукам."],
+[6,"Kyuri poloniy va radiy elementlarini kashf etgan.","Curie discovered the elements polonium and radium.","Кюри открыла полоний и радий."],
+[6,"Lavuazye massa saqlanish qonunini isbotlagan.","Lavoisier established the law of conservation of mass.","Лавуазье доказал закон сохранения массы."],
+[6,"Dalton atom nazariyasini 1803-yilda ilgari surgan.","Dalton proposed his atomic theory in 1803.","Дальтон предложил атомную теорию в 1803 году."],
+[6,"Nobel dinamitni ixtiro qilib, Nobel mukofoti jamgʻarmasini qoldirgan.","Nobel invented dynamite and left his fortune to fund the Nobel Prizes.","Нобель изобрёл динамит и завещал состояние на Нобелевскую премию."],
+[7,"Olmos — tabiatdagi eng qattiq modda.","Diamond is the hardest natural material.","Алмаз — самый твёрдый природный материал."],
+[7,"Grafen — bir atom qalinlikdagi supermaterial.","Graphene is a supermaterial just one atom thick.","Графен — сверхматериал толщиной в один атом."],
+[7,"Geliy −269°C da qaynaydi — bu eng past qaynash harorati.","Helium boils at −269 °C — the lowest boiling point of all.","Гелий кипит при −269 °C — это самая низкая температура кипения."],
+[7,"Absolyut nol −273,15°C — haroratning quyi chegarasi.","Absolute zero, −273.15 °C, is the lower limit of temperature.","Абсолютный ноль (−273,15 °C) — нижний предел температуры."],
+[7,"Suv 4°C da eng zich holatda boʻladi.","Water is at its densest at 4 °C.","Вода наиболее плотная при 4 °C."],
+[7,"Ftor — eng faol kimyoviy element.","Fluorine is the most reactive chemical element.","Фтор — самый реакционноспособный элемент."],
+[7,"Superkislotalar sulfat kislotasidan milliardlab marta kuchli boʻlishi mumkin.","Superacids can be billions of times stronger than sulfuric acid.","Суперкислоты могут быть в миллиарды раз сильнее серной кислоты."],
+[7,"Aerogel — deyarli havodek yengil qattiq modda.","Aerogel is a solid almost as light as air.","Аэрогель — твёрдое тело, почти лёгкое как воздух."],
+[7,"Bir gramm vodorodda ~6×10²³ ta atom bor.","One gram of hydrogen holds about 6×10²³ atoms.","В одном грамме водорода около 6×10²³ атомов."],
+[7,"Avogadro soni: bir molda 6,022×10²³ ta zarracha bor.","Avogadro's number: one mole contains 6.022×10²³ particles.","Число Авогадро: в одном моле 6,022×10²³ частиц."],
+[7,"Oganeson atomi bir millisekunddan kam yashaydi.","An oganesson atom lives for less than a millisecond.","Атом оганесона живёт меньше миллисекунды."]
+];
+
+/* ============ QUIZ (uz/en/ru, fallback en) ============ */
+const QZ={
+uz:[["Suvning kimyoviy formulasi qaysi?",["H₂O","CO₂","O₂"],0],["Atom yadrosida nimalar bor?",["Elektronlar","Proton va neytronlar","Faqat neytronlar"],1],["Havoning ~78% ini qaysi gaz tashkil qiladi?",["O₂","CO₂","N₂"],2],["pH 7 qanday muhit?",["Kislotali","Neytral","Ishqoriy"],1],["Olmos qaysi elementdan tuzilgan?",["Temir","Uglerod","Kremniy"],1],["Osh tuzining formulasi qaysi?",["KCl","CaCO₃","NaCl"],2]],
+en:[["What is the chemical formula of water?",["H₂O","CO₂","O₂"],0],["What is inside an atom's nucleus?",["Electrons","Protons and neutrons","Only neutrons"],1],["Which gas makes up ~78% of air?",["O₂","CO₂","N₂"],2],["What kind of medium is pH 7?",["Acidic","Neutral","Basic"],1],["Diamond is made of which element?",["Iron","Carbon","Silicon"],1],["What is the formula of table salt?",["KCl","CaCO₃","NaCl"],2]],
+ru:[["Какова химическая формула воды?",["H₂O","CO₂","O₂"],0],["Что находится в ядре атома?",["Электроны","Протоны и нейтроны","Только нейтроны"],1],["Какой газ составляет ~78% воздуха?",["O₂","CO₂","N₂"],2],["Какая среда при pH 7?",["Кислотная","Нейтральная","Щелочная"],1],["Из какого элемента состоит алмаз?",["Железо","Углерод","Кремний"],1],["Какова формула поваренной соли?",["KCl","CaCO₃","NaCl"],2]]
+};
+
+/* ============ 118 ELEMENTS: [symbol, name, mass, category] ============ */
+const EL=[
+["H","Hydrogen",1.008,5],["He","Helium",4.0026,7],["Li","Lithium",6.94,0],["Be","Beryllium",9.0122,1],["B","Boron",10.81,4],["C","Carbon",12.011,5],["N","Nitrogen",14.007,5],["O","Oxygen",15.999,5],["F","Fluorine",18.998,6],["Ne","Neon",20.180,7],
+["Na","Sodium",22.990,0],["Mg","Magnesium",24.305,1],["Al","Aluminium",26.982,3],["Si","Silicon",28.085,4],["P","Phosphorus",30.974,5],["S","Sulfur",32.06,5],["Cl","Chlorine",35.45,6],["Ar","Argon",39.948,7],["K","Potassium",39.098,0],["Ca","Calcium",40.078,1],
+["Sc","Scandium",44.956,2],["Ti","Titanium",47.867,2],["V","Vanadium",50.942,2],["Cr","Chromium",51.996,2],["Mn","Manganese",54.938,2],["Fe","Iron",55.845,2],["Co","Cobalt",58.933,2],["Ni","Nickel",58.693,2],["Cu","Copper",63.546,2],["Zn","Zinc",65.38,2],
+["Ga","Gallium",69.723,3],["Ge","Germanium",72.630,4],["As","Arsenic",74.922,4],["Se","Selenium",78.971,5],["Br","Bromine",79.904,6],["Kr","Krypton",83.798,7],["Rb","Rubidium",85.468,0],["Sr","Strontium",87.62,1],["Y","Yttrium",88.906,2],["Zr","Zirconium",91.224,2],
+["Nb","Niobium",92.906,2],["Mo","Molybdenum",95.95,2],["Tc","Technetium",98,2],["Ru","Ruthenium",101.07,2],["Rh","Rhodium",102.91,2],["Pd","Palladium",106.42,2],["Ag","Silver",107.87,2],["Cd","Cadmium",112.41,2],["In","Indium",114.82,3],["Sn","Tin",118.71,3],
+["Sb","Antimony",121.76,4],["Te","Tellurium",127.60,4],["I","Iodine",126.90,6],["Xe","Xenon",131.29,7],["Cs","Caesium",132.91,0],["Ba","Barium",137.33,1],["La","Lanthanum",138.91,8],["Ce","Cerium",140.12,8],["Pr","Praseodymium",140.91,8],["Nd","Neodymium",144.24,8],
+["Pm","Promethium",145,8],["Sm","Samarium",150.36,8],["Eu","Europium",151.96,8],["Gd","Gadolinium",157.25,8],["Tb","Terbium",158.93,8],["Dy","Dysprosium",162.50,8],["Ho","Holmium",164.93,8],["Er","Erbium",167.26,8],["Tm","Thulium",168.93,8],["Yb","Ytterbium",173.05,8],
+["Lu","Lutetium",174.97,8],["Hf","Hafnium",178.49,2],["Ta","Tantalum",180.95,2],["W","Tungsten",183.84,2],["Re","Rhenium",186.21,2],["Os","Osmium",190.23,2],["Ir","Iridium",192.22,2],["Pt","Platinum",195.08,2],["Au","Gold",196.97,2],["Hg","Mercury",200.59,2],
+["Tl","Thallium",204.38,3],["Pb","Lead",207.2,3],["Bi","Bismuth",208.98,3],["Po","Polonium",209,3],["At","Astatine",210,6],["Rn","Radon",222,7],["Fr","Francium",223,0],["Ra","Radium",226,1],["Ac","Actinium",227,9],["Th","Thorium",232.04,9],
+["Pa","Protactinium",231.04,9],["U","Uranium",238.03,9],["Np","Neptunium",237,9],["Pu","Plutonium",244,9],["Am","Americium",243,9],["Cm","Curium",247,9],["Bk","Berkelium",247,9],["Cf","Californium",251,9],["Es","Einsteinium",252,9],["Fm","Fermium",257,9],
+["Md","Mendelevium",258,9],["No","Nobelium",259,9],["Lr","Lawrencium",266,9],["Rf","Rutherfordium",267,2],["Db","Dubnium",268,2],["Sg","Seaborgium",269,2],["Bh","Bohrium",270,2],["Hs","Hassium",277,2],["Mt","Meitnerium",278,2],["Ds","Darmstadtium",281,2],
+["Rg","Roentgenium",282,2],["Cn","Copernicium",285,2],["Nh","Nihonium",286,3],["Fl","Flerovium",289,3],["Mc","Moscovium",290,3],["Lv","Livermorium",293,3],["Ts","Tennessine",294,6],["Og","Oganesson",294,7]
+];
+const ROWS=[
+"H . . . . . . . . . . . . . . . . He",
+"Li Be . . . . . . . . . . B C N O F Ne",
+"Na Mg . . . . . . . . . . Al Si P S Cl Ar",
+"K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr",
+"Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe",
+"Cs Ba * Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn",
+"Fr Ra ** Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og",
+". . La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu .",
+". . Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr ."
+];
+
+/* ============ MOLECULES: atoms [el,x,y,z], bonds [i,j,order] ============ */
+const MOLS=[
+{f:"H₂O",a:[["O",0,0,0],["H",0.76,0.59,0],["H",-0.76,0.59,0]],b:[[0,1,1],[0,2,1]]},
+{f:"CO₂",a:[["C",0,0,0],["O",1.16,0,0],["O",-1.16,0,0]],b:[[0,1,2],[0,2,2]]},
+{f:"CH₄",a:[["C",0,0,0],["H",.63,.63,.63],["H",-.63,-.63,.63],["H",-.63,.63,-.63],["H",.63,-.63,-.63]],b:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+{f:"NH₃",a:[["N",0,.38,0],["H",.94,-.13,0],["H",-.47,-.13,.81],["H",-.47,-.13,-.81]],b:[[0,1,1],[0,2,1],[0,3,1]]},
+{f:"O₂",a:[["O",.6,0,0],["O",-.6,0,0]],b:[[0,1,2]]},
+{f:"NaCl",a:[["Na",-1.18,0,0],["Cl",1.18,0,0]],b:[[0,1,0]]},
+{f:"C₂H₅OH",a:[["C",-1.2,.25,0],["C",0,-.55,0],["O",1.15,.28,0],["H",1.95,-.3,0],["H",-1.15,.9,.88],["H",-1.15,.9,-.88],["H",-2.1,-.35,0],["H",0,-1.2,.88],["H",0,-1.2,-.88]],b:[[0,1,1],[1,2,1],[2,3,1],[0,4,1],[0,5,1],[0,6,1],[1,7,1],[1,8,1]]}
+];
+(function(){ // benzene ring, generated
+ const a=[],b=[];
+ for(let k=0;k<6;k++){const t=Math.PI/3*k;a.push(["C",1.4*Math.cos(t),1.4*Math.sin(t),0]);}
+ for(let k=0;k<6;k++){const t=Math.PI/3*k;a.push(["H",2.49*Math.cos(t),2.49*Math.sin(t),0]);}
+ for(let k=0;k<6;k++){b.push([k,(k+1)%6,k%2?1:2]);b.push([k,k+6,1]);}
+ MOLS.splice(6,0,{f:"C₆H₆",a:a,b:b});
+})();
+const COL={H:"#eef2fa",C:"#9aa7bd",N:"#5b8cff",O:"#ff5b5b",Na:"#b06bff",Cl:"#54d66b"};
+const RAD={H:.30,C:.46,N:.44,O:.42,Na:.62,Cl:.58};
+
+/* ============ STATE & HELPERS ============ */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+let lang="uz"; try{lang=localStorage.getItem("kimyoLang")||"uz";}catch(e){}
+if(!I18N[lang])lang="uz";
+let cat=-1,query="",page=1,curMol=0,selEl=null;
+let qi=0,score=0,answered=false;
+const factLang=()=>({uz:1,en:2,ru:3}[lang]||2);
+const quizData=()=>QZ[lang]||QZ.en;
+const T=()=>I18N[lang].t;
+function shade(hex,f){const n=parseInt(hex.slice(1),16);return "rgb("+Math.round((n>>16&255)*f)+","+Math.round((n>>8&255)*f)+","+Math.round((n&255)*f)+")";}
+function lum(hex){const n=parseInt(hex.slice(1),16);return 0.299*(n>>16&255)+0.587*(n>>8&255)+0.114*(n&255);}
+
+/* ============ FACTS UI ============ */
+function filtered(){const fl=factLang(),arr=[];F.forEach((f,i)=>{if((cat<0||f[0]===cat)&&(!query||f[fl].toLowerCase().includes(query)))arr.push({f:f,i:i});});return arr;}
+function renderChips(){
+ const cnt=[0,0,0,0,0,0,0,0];F.forEach(f=>cnt[f[0]]++);
+ let h='<button class="chip'+(cat<0?" on":"")+'" data-c="-1">'+T().all+" · "+F.length+"</button>";
+ I18N[lang].cats.forEach((n,i)=>{h+='<button class="chip'+(cat===i?" on":"")+'" data-c="'+i+'">'+EMO[i]+" "+n+" · "+cnt[i]+"</button>";});
+ $("#chips").innerHTML=h;
+}
+function renderFacts(){
+ const list=filtered(),n=Math.min(page*24,list.length),fl=factLang();
+ $("#factGrid").innerHTML=list.slice(0,n).map(o=>
+  '<article class="fcard"><div class="fmeta"><span class="fcat">'+EMO[o.f[0]]+" "+I18N[lang].cats[o.f[0]]+'</span><span>#'+String(o.i+1).padStart(3,"0")+'</span></div><p>'+o.f[fl]+'</p><button class="copy" data-i="'+o.i+'">📋 '+T().copy+"</button></article>").join("");
+ $("#shown").textContent=T().shown.replace("{a}",n).replace("{b}",list.length);
+ $("#more").hidden=n>=list.length;
+ $("#none").hidden=list.length>0;
+}
+function randomFact(){
+ const pool=filtered(),src=pool.length?pool:F.map((f,i)=>({f:f,i:i}));
+ const p=src[Math.floor(Math.random()*src.length)],spot=$("#spot");
+ spot.hidden=false;
+ spot.innerHTML='<div class="fmeta"><span class="fcat">'+EMO[p.f[0]]+" "+I18N[lang].cats[p.f[0]]+"</span><span>#"+String(p.i+1).padStart(3,"0")+"</span></div><p>"+p.f[factLang()]+"</p>";
+ spot.classList.remove("pop");void spot.offsetWidth;spot.classList.add("pop");
+}
+function copyText(txt,btn){
+ const done=()=>{btn.textContent=T().ok;setTimeout(()=>{btn.textContent="📋 "+T().copy;},1200);};
+ const fb=()=>{try{const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}catch(e){}};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(()=>{fb();done();});}else{fb();done();}
+}
+
+/* ============ 3D MOLECULE CANVAS ============ */
+const canvas=$("#molCanvas"),ctx=canvas.getContext("2d");
+let vw=0,vh=0,rx=-0.35,ry=0.6,auto=true,labels=true,drag=false,px=0,py=0;
+function fit(){const r=canvas.getBoundingClientRect();vw=r.width;vh=r.height;const d=window.devicePixelRatio||1;canvas.width=Math.round(vw*d);canvas.height=Math.round(vh*d);ctx.setTransform(d,0,0,d,0,0);}
+function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+function drawBond(P,b,S){
+ const A=P[b[0]],B=P[b[1]],dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy)||1;
+ const w=Math.max(2,0.085*S*(A.s+B.s)/2);
+ ctx.strokeStyle="rgba(205,220,245,.85)";ctx.lineCap="round";
+ if(b[2]===0){ctx.lineWidth=w*0.7;ctx.setLineDash([w*1.6,w*1.6]);line(A.x,A.y,B.x,B.y);ctx.setLineDash([]);}
+ else if(b[2]===2){const ox=-dy/len*w*1.15,oy=dx/len*w*1.15;ctx.lineWidth=w*0.7;line(A.x+ox,A.y+oy,B.x+ox,B.y+oy);line(A.x-ox,A.y-oy,B.x-ox,B.y-oy);}
+ else{ctx.lineWidth=w;line(A.x,A.y,B.x,B.y);}
+}
+function drawAtom(p){
+ const col=COL[p.el];
+ ctx.save();ctx.shadowColor=col;ctx.shadowBlur=16;
+ const g=ctx.createRadialGradient(p.x-p.r*0.35,p.y-p.r*0.4,p.r*0.12,p.x,p.y,p.r);
+ g.addColorStop(0,"#ffffff");g.addColorStop(0.28,col);g.addColorStop(1,shade(col,0.42));
+ ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);ctx.fill();ctx.restore();
+ if(labels&&p.r>9){ctx.fillStyle=lum(col)>150?"#0b1220":"#ffffff";ctx.font="700 "+Math.max(10,p.r*0.8)+"px system-ui,sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(p.el,p.x,p.y);}
+}
+function draw(){
+ const m=MOLS[curMol];ctx.clearRect(0,0,vw,vh);
+ const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);
+ const S=Math.min(vw,vh)/7.2,CX=vw/2,CY=vh/2;
+ const P=m.a.map(a=>{
+  const x=a[1],y=a[2],z=a[3];
+  const x1=x*cy+z*sy,z1=-x*sy+z*cy;
+  const y1=y*cx-z1*sx,z2=y*sx+z1*cx;
+  const s=6/(6-z2);
+  return {el:a[0],x:CX+x1*S*s,y:CY+y1*S*s,r:RAD[a[0]]*S*s,z:z2,s:s};
+ });
+ const items=[];
+ m.b.forEach(b=>items.push({z:(P[b[0]].z+P[b[1]].z)/2-0.001,t:0,b:b}));
+ P.forEach(p=>items.push({z:p.z,t:1,p:p}));
+ items.sort((u,v)=>u.z-v.z);
+ items.forEach(it=>{if(it.t===0)drawBond(P,it.b,S);else drawAtom(it.p);});
+}
+function tick(){if(auto&&!drag)ry+=0.008;draw();requestAnimationFrame(tick);}
+canvas.addEventListener("pointerdown",e=>{drag=true;px=e.clientX;py=e.clientY;try{canvas.setPointerCapture(e.pointerId);}catch(err){}});
+canvas.addEventListener("pointermove",e=>{if(!drag)return;ry+=(e.clientX-px)*0.01;rx+=(e.clientY-py)*0.01;rx=Math.max(-1.5,Math.min(1.5,rx));px=e.clientX;py=e.clientY;});
+canvas.addEventListener("pointerup",()=>{drag=false;});
+canvas.addEventListener("pointercancel",()=>{drag=false;});
+function renderMolBtns(){
+ $("#molBtns").innerHTML=MOLS.map((m,i)=>'<button class="chip'+(i===curMol?" on":"")+'" data-m="'+i+'">'+m.f+" · "+I18N[lang].mols[i]+"</button>").join("");
+ $("#molName").textContent=MOLS[curMol].f+" — "+I18N[lang].mols[curMol];
+}
+
+/* ============ PERIODIC TABLE ============ */
+const SYM={},POS={};
+EL.forEach((e,i)=>SYM[e[0]]=i+1);
+function buildTable(){
+ let h="";
+ ROWS.forEach((row,r)=>{
+  row.split(" ").forEach((tok,c)=>{
+   if(tok===".")return;
+   const gr=r<7?r+1:r+2;
+   if(tok==="*"||tok==="**"){h+='<div class="fmark" style="grid-column:'+(c+1)+";grid-row:"+gr+'">'+(tok==="*"?"57–71":"89–103")+"</div>";return;}
+   const z=SYM[tok],e=EL[z-1];
+   POS[tok]={period:r<7?r+1:(r===7?6:7),group:r<7?c+1:null};
+   h+='<button class="el c'+e[3]+'" data-z="'+z+'" style="grid-column:'+(c+1)+";grid-row:"+gr+'"><i>'+z+"</i><b>"+tok+"</b></button>";
+  });
+ });
+ $("#ptable").innerHTML=h;
+}
+function showEl(z){
+ selEl=z;const e=EL[z-1],p=POS[e[0]],t=T();
+ $$(".el.sel").forEach(x=>x.classList.remove("sel"));
+ const cell=$('.el[data-z="'+z+'"]');if(cell)cell.classList.add("sel");
+ $("#elInfo").innerHTML='<div class="eltile c'+e[3]+'"><i>'+z+"</i><b>"+e[0]+'</b></div><div class="elrows"><h3>'+e[1]+'</h3><div class="er"><span>'+t.mass+"</span><b>"+e[2]+'</b></div><div class="er"><span>'+t.per+"</span><b>"+p.period+'</b></div><div class="er"><span>'+t.grp+"</span><b>"+(p.group||"—")+'</b></div><div class="er"><span>'+t.cat+"</span><b>"+I18N[lang].ec[e[3]]+"</b></div></div>";
+}
+function renderLegend(){$("#legend").innerHTML=I18N[lang].ec.map((n,i)=>'<span class="lg"><i class="dot c'+i+'"></i>'+n+"</span>").join("");}
+
+/* ============ pH ============ */
+const STOPS=[[0,[213,0,0]],[3,[255,109,0]],[5,[255,214,0]],[7,[0,200,83]],[9,[0,176,255]],[11,[48,79,254]],[14,[170,0,255]]];
+function phColor(v){
+ let a=STOPS[0],b=STOPS[STOPS.length-1];
+ for(let i=0;i<STOPS.length-1;i++){if(v>=STOPS[i][0]&&v<=STOPS[i+1][0]){a=STOPS[i];b=STOPS[i+1];break;}}
+ const f=(v-a[0])/((b[0]-a[0])||1);
+ const c=a[1].map((x,i)=>Math.round(x+(b[1][i]-x)*f));
+ return "rgb("+c[0]+","+c[1]+","+c[2]+")";
+}
+function updatePH(){
+ const v=parseFloat($("#phRange").value),t=T();
+ $("#liquid").style.background=phColor(v);
+ $("#phVal").textContent=v.toFixed(1);
+ $("#phLabel").textContent=v<6.5?"🍋 "+t.acid:(v<=7.5?"💧 "+t.neu:"🧼 "+t.base);
+}
+
+/* ============ QUIZ ============ */
+function renderQuiz(){
+ const data=quizData(),t=T();
+ $("#qprog").style.width=(qi/data.length*100)+"%";
+ if(qi>=data.length){
+  const em=score>=5?"🏆":(score>=3?"👍":"📚");
+  $("#qbody").innerHTML='<div class="qres"><div class="qemoji">'+em+"</div><h3>"+t.res.replace("{a}",score).replace("{b}",data.length)+'</h3><button class="btn" data-act="again">'+t.again+"</button></div>";
+  return;
+ }
+ const q=data[qi];
+ $("#qbody").innerHTML='<div class="qtop">'+(qi+1)+" / "+data.length+'</div><h3 class="qq">'+q[0]+'</h3><div class="opts">'+q[1].map((o,k)=>'<button class="opt" data-k="'+k+'">'+o+"</button>").join("")+'</div><p id="qfb" class="qfb"></p><button id="qnext" class="btn small" data-act="next" hidden>'+t.next+"</button>";
+}
+function answer(k){
+ if(answered)return;answered=true;
+ const data=quizData(),q=data[qi],ok=k===q[2],t=T();
+ if(ok)score++;
+ $$("#qbody .opt").forEach((b,j)=>{b.disabled=true;if(j===q[2])b.classList.add("good");else if(j===k)b.classList.add("bad");});
+ $("#qfb").textContent=ok?t.good:t.bad;$("#qfb").className="qfb "+(ok?"g":"b");
+ $("#qnext").hidden=false;
+ $("#qprog").style.width=((qi+1)/data.length*100)+"%";
+}
+function resetQuiz(){qi=0;score=0;answered=false;renderQuiz();}
+
+/* ============ LANGUAGE ============ */
+function applyLang(){
+ const L=I18N[lang],t=L.t;
+ document.documentElement.lang=lang;
+ document.documentElement.setAttribute("dir",L.dir);
+ $("#langSel").value=lang;
+ $$("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(t[k]!==undefined)el.textContent=t[k];});
+ $$("[data-i18n-ph]").forEach(el=>{el.placeholder=t[el.getAttribute("data-i18n-ph")];});
+ $("#note").textContent=t.note;$("#note").hidden=!t.note;
+ $("#spot").hidden=true;
+ page=1;renderChips();renderFacts();renderMolBtns();renderLegend();
+ if(selEl)showEl(selEl);else $("#elInfo").innerHTML='<p class="pick">'+t.pick+"</p>";
+ resetQuiz();updatePH();
+ try{localStorage.setItem("kimyoLang",lang);}catch(e){}
+}
+
+/* ============ INIT & EVENTS ============ */
+$("#langSel").innerHTML=ORDER.map(c=>'<option value="'+c+'">'+I18N[c].flag+" "+I18N[c].name+"</option>").join("");
+$("#langSel").addEventListener("change",e=>{lang=e.target.value;applyLang();});
+$("#stF").textContent=F.length;$("#stL").textContent=ORDER.length;$("#stM").textContent=MOLS.length;$("#stE").textContent=EL.length;
+buildTable();
+$("#q").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();page=1;renderFacts();});
+$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;cat=+b.dataset.c;page=1;renderChips();renderFacts();});
+$("#more").addEventListener("click",()=>{page++;renderFacts();});
+$("#factGrid").addEventListener("click",e=>{const b=e.target.closest(".copy");if(!b)return;copyText(F[+b.dataset.i][factLang()],b);});
+$("#btnRand").addEventListener("click",()=>{randomFact();$("#facts").scrollIntoView({behavior:"smooth"});});
+$("#btnRand2").addEventListener("click",randomFact);
+$("#btnFacts").addEventListener("click",()=>$("#facts").scrollIntoView({behavior:"smooth"}));
+$("#molBtns").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;curMol=+b.dataset.m;renderMolBtns();});
+$("#lblChk").addEventListener("change",e=>{labels=e.target.checked;});
+$("#spinChk").addEventListener("change",e=>{auto=e.target.checked;});
+$("#ptable").addEventListener("click",e=>{const b=e.target.closest(".el");if(!b)return;showEl(+b.dataset.z);});
+$("#phRange").addEventListener("input",updatePH);
+$("#qbody").addEventListener("click",e=>{
+ const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.act==="next"){qi++;answered=false;renderQuiz();}
+ else if(b.dataset.act==="again"){resetQuiz();}
+ else if(b.classList.contains("opt")){answer(+b.dataset.k);}
+});
+window.addEventListener("resize",fit);
+if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){auto=false;$("#spinChk").checked=false;}
+applyLang();
+fit();tick();
+if("IntersectionObserver" in window){
+ const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("on");io.unobserve(x.target);}}),{threshold:.08});
+ $$(".rev").forEach(el=>io.observe(el));
+}else{$$(".rev").forEach(el=>el.classList.add("on"));}
+</script>
+</body>
+</html>
